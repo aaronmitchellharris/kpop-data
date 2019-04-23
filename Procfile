@@ -1,0 +1,1 @@
+web: gununicorn kpop-numbers.wsgi:application --log-file -
