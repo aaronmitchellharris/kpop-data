@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+from . import yt
 import datetime
 
 
@@ -30,7 +30,6 @@ class Group(models.Model):
     def is_solo(self):
         return (self.current_member_count == 1)
 
-
 class Video(models.Model):
     group = models.ForeignKey(Group, related_name='videos', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -40,3 +39,6 @@ class Video(models.Model):
 
     def __str__(self):
         return self.title
+
+    def updateViews(self):
+        self.view_count = yt.YTapi.getViewCount(yt_id=self.yt_video_id)
