@@ -1,1 +1,1 @@
-web: gunicorn kpop-numbers.wsgi:application --log-file -
+web: gunicorn kpop.wsgi:application --log-file -
