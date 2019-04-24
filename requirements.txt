@@ -32,3 +32,5 @@ youtube-dl==2019.3.18
 gunicorn
 django-heroku
 whitenoise
+python-dotenv
+dj_database_url
