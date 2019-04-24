@@ -47,12 +47,13 @@
 
         <h1 class="container centertext">{{ group }} </h1>
 
-        <img src="{{ group.picture.url }}" class="container centerimage">
+        <img src="{{ group.pic_url }}" class="container centerimage">
 
         <div class="centertext">
             <h3>Company: {{ group.company }}</h3>
             <h3>Debut date: {{ group.debut_date }}</h3>
             <h3>Number of members: {{ group.current_member_count }}</h3>
+            <h3>Total MV View Count: {{ group.total_view_count }}</h3>
         </div>
 
         <div class="row">

@@ -17,6 +17,32 @@ class AboutView(generic.ListView):
 class GroupsView(generic.ListView):
     template_name = 'stats/groups.html'
     model = Group
+    def get_queryset(self):
+        return Group.objects.all().order_by('total_view_count').reverse()
+
+class GroupsViewHottest(generic.ListView):
+    template_name = 'stats/groups.html'
+    model = Group
+    def get_queryset(self):
+        return Group.objects.all().order_by('total_view_count').reverse()
+
+class GroupsViewAlpha(generic.ListView):
+    template_name = 'stats/groups.html'
+    model = Group
+    def get_queryset(self):
+        return Group.objects.all().order_by('name')
+
+class GroupsViewOldest(generic.ListView):
+    template_name = 'stats/groups.html'
+    model = Group
+    def get_queryset(self):
+        return Group.objects.all().order_by('debut_date')
+
+class GroupsViewNewest(generic.ListView):
+    template_name = 'stats/groups.html'
+    model = Group
+    def get_queryset(self):
+        return Group.objects.all().order_by('debut_date').reverse()
 
 class ProfileView(generic.DetailView):
     template_name = 'stats/profile.html'

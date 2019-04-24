@@ -13,6 +13,7 @@ class Group(models.Model):
     current_member_count = models.IntegerField(default=0)
     picture = models.ImageField(upload_to='gallery')
     yt_channel_id = models.CharField(max_length=200)
+    pic_url = models.CharField(max_length=200, default='empty')
 
     GIRL = 'G'
     BOY = 'B'
@@ -36,10 +37,15 @@ class Video(models.Model):
     upload_date = models.DateField('upload date')
     view_count = models.IntegerField(default=0)
     yt_video_id = models.CharField(max_length=200)
+    thumbnail_url = models.CharField(max_length=200, default='empty')
 
     def __str__(self):
         return self.title
 
     def updateViews(self):
-        self.view_count = yt.YTapi.getViewCount(yt_id=self.yt_video_id)
+        self.view_count = yt.YTapi.getViewCount(yt_id=self.yt_video_id)[0]
+        self.save()
+
+    def updatePic(self):
+        self.thumbnail_url = yt.YTapi.getViewCount(yt_id=self.yt_video_id)[1]
         self.save()

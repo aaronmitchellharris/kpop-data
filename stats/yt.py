@@ -20,15 +20,16 @@ class YTapi:
             api_service_name, api_version, developerKey = DEVELOPER_KEY)
 
         request = youtube.videos().list(
-            part="statistics",
+            part="statistics, snippet",
             id=yt_id
         )
         response = request.execute()
 
         #print('Views: {}'.format(response['items'][0]['statistics']['viewCount']))
-        return int(response['items'][0]['statistics']['viewCount'])
+        return [int(response['items'][0]['statistics']['viewCount']), response['items'][0]['snippet']['thumbnails']['high']['url']]
 
-    '''
+
+'''
     def updateViews():
         for v in Video.objects.all():
             v.view_count=getViewCount(v.yt_video_id)

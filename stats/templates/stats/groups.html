@@ -85,16 +85,31 @@
                 <h5 id="amount" ></h5>
                 <div id="slider-range"></div>
             </div>
+
+            <div class="dropdown">
+                <a style="color:black; background-color:#ffc107" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort
+                </a>
+
+                <div style="background-color:#f0ad4e" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'stats:groups' %}">Most Views</a>
+                    <a class="dropdown-item" href="{% url 'stats:hottest' %}">Hottest</a>
+                    <a class="dropdown-item" href="{% url 'stats:alphabetical' %}">Alphabetical</a>
+                    <a class="dropdown-item" href="{% url 'stats:oldest' %}">Oldest</a>
+                    <a class="dropdown-item" href="{% url 'stats:newest' %}">Newest</a>
+                </div>
+            </div>
         </div>
 
         <div class="row" id="groups">
         {% for g in object_list %}
-             <div class="col-med-4 filterDiv {{ g.gender }} {{ g.company }} {{ g.current_member_count }} anyGender anyCompany anyMemberCount show">
+             <div class="col-med-4 filterDiv {{ g.gender }} {{ g.company }} {{ g.current_member_count }} anyGender anyCompany anyMemberCount show" style="margin:3px;">
                  <a href="{% url 'stats:profile' g.pk g.name %}">
                      <div class="card bg-dark" style="width: 18rem;">
-                         <img src="{{ g.picture.url }}" class="card-img-top" alt="..." height="188" width="286">
-                         <div class="card-body">
+                         <img src="{{ g.pic_url }}" class="card-img-top" alt="...">
+                         <div class="card-body" style="background-color:black">
                              <p class="card-text" style="color: white">{{ g }}</p>
+                             <p class="card-text" style="color: white">Views: {{ g.total_view_count }}</p>
                          </div>
                      </div>
                  </a>
