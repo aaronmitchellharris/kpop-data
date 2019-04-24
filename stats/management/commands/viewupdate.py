@@ -24,3 +24,6 @@ class Command(BaseCommand):
                 print('video count now ' + str(g.video_count))
                 v.save()
             g.save()
+
+        for vid in Video.objects.all():
+            print(vid.title + ': ' + str(vid.view_count))

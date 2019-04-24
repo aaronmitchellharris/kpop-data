@@ -42,3 +42,4 @@ class Video(models.Model):
 
     def updateViews(self):
         self.view_count = yt.YTapi.getViewCount(yt_id=self.yt_video_id)
+        self.save()
