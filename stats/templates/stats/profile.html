@@ -1,6 +1,7 @@
 <!doctype html>
 
 {% load static %}
+{% load humanize %}
 
 <html>
 
@@ -53,7 +54,7 @@
             <h3>Company: {{ group.company }}</h3>
             <h3>Debut date: {{ group.debut_date }}</h3>
             <h3>Number of members: {{ group.current_member_count }}</h3>
-            <h3>Total MV View Count: {{ group.total_view_count }}</h3>
+            <h3>Total MV View Count: {{ group.total_view_count|intcomma }}</h3>
         </div>
 
         <div class="row">
@@ -63,7 +64,7 @@
                 <iframe width="550" height="310"
                         src="https://www.youtube.com/embed/{{ v.yt_video_id }}">
                 </iframe>
-                <p>Views: {{ v.view_count }}</p>
+                <p>Views: {{ v.view_count|intcomma }}</p>
                 <p>Upload Date: {{ v.upload_date }}</p>
             </div>
         {% endfor %}

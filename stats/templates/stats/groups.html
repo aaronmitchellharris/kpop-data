@@ -1,6 +1,7 @@
 <!doctype html>
 
 {% load static %}
+{% load humanize %}
 
 <html>
 
@@ -109,7 +110,7 @@
                          <img src="{{ g.pic_url }}" class="card-img-top" alt="...">
                          <div class="card-body" style="background-color:black">
                              <p class="card-text" style="color: white">{{ g }}</p>
-                             <p class="card-text" style="color: white">Views: {{ g.total_view_count }}</p>
+                             <p class="card-text" style="color: white">Views: {{ g.total_view_count|intcomma }}</p>
                          </div>
                      </div>
                  </a>
