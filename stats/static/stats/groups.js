@@ -10,6 +10,12 @@ $( function() {
         } else {
         $( "#amount" ).html(ui.values[ 0 ] + '-' + ui.values[ 1 ] );
         }
+        var objects, i;
+        objects = document.getElementsByClassName("filterDiv");
+        for (i=0; i<objects.length; i++) {
+
+        }
+    }
       }
     });
     $( "#amount" ).html("1-12");
@@ -46,120 +52,6 @@ function filterSelection(c, select) {
     }
   }
 }
-
-/*function filterGender(c) {
-  var objects, i, arr1;
-  objects = document.getElementsByClassName("filterDiv");
-  if (filters['gender'] != '') {
-    for (i=0; i<objects.length; i++) {
-        arr1 = objects[i].className.split(" ");
-        if (arr1.indexOf(filters['gender']) > -1) w3RemoveClass(objects[i], "show");
-    }
-  }
-  filters['gender'] = c;
-    for (i=0; i<objects.length; i++) {
-        arr1 = objects[i].className.split(" ");
-        if (arr1.indexOf(filters['gender']) > -1) {
-            w3AddClass(objects[i], "show");
-        } else {
-            w3RemoveClass(objects[i], "show");
-        }
-    }
-}
-
-function filterCompany(c) {
-  var objects, i, arr1;
-  objects = document.getElementsByClassName("filterDiv");
-  if (filters['company'] != '') {
-    for (i=0; i<objects.length; i++) {
-        arr1 = objects[i].className.split(" ");
-        if (arr1.indexOf(filters['company']) > -1) w3RemoveClass(objects[i], "show");
-    }
-  }
-  filters['company'] = c;
-    for (i=0; i<objects.length; i++) {
-        arr1 = objects[i].className.split(" ");
-        if (arr1.indexOf(filters['company']) > -1) {
-            w3AddClass(objects[i], "show");
-        } else {
-            w3RemoveClass(objects[i], "show");
-        }
-    }
-}*/
-
-//filterSelection("all")
-/*function filterSelection(c) {
-  var objects, i, j, arr1, arr2;
-  objects = document.getElementsByClassName("filterDiv");
-  if (c == "all") c = "";
-  if (filters == "") {
-    filters = c;
-  } else if (c != "") {
-    filters = filters + " " + c;
-  }
-  genderCheck(filters, c);
-  companyCheck(filters, c);
-  // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
-  if (filters == "") {
-    for (i = 0; i < objects.length; i++) {
-        w3AddClass(objects[i], "show");
-    }
-  } else {
-    for (i = 0; i < objects.length; i++) {
-        w3RemoveClass(objects[i], "show");
-        arr1 = filters.split(" ")
-        for (j=0; j<arr1.length; j++){
-            arr2 = objects[i].className.split(" ");
-            if (arr2.indexOf(arr1[j]) > -1) w3AddClass(objects[i], "show");
-        }
-    }
-  }
-}
-
-function genderCheck(f, want) {
-    var i, arr1, check;
-    arr1 = filters.split(" ");
-    if (want == 'G') {
-        check = 'B';
-    } else if (want == 'B') {
-        check = 'G';
-    } else {
-        check = 0;
-    }
-    if (check != 0) {
-        for (i=0; i<arr1.length; i++) {
-            if (arr1[i] == check) {
-                arr1.splice(i, 1);
-                filters = arr1.join(" ");
-            }
-        }
-    }
-}
-
-function companyCheck(f, want) {
-    var i, j, arr1, arr2, check;
-    arr1 = filters.split(" ");
-    if (want == 'YG') {
-        check = 'JYP Big';
-    } else if (want == 'JYP') {
-        check = 'YG Big';
-    } else if (want == 'Big') {
-        check = 'YG JYP';
-    } else {
-        check = 0;
-    }
-    if (check != 0) {
-        arr2 = check.split(" ");
-        for (i=0; i<arr1.length; i++) {
-            for (j=0; j<arr2.length; j++) {
-                if (arr1[i] == arr2[j]) {
-                    arr1.splice(i, 1);
-                    filters = arr1.join(" ");
-                }
-            }
-        }
-    }
-}*/
 
 function resetFilter(bundle) {
     var i, arr1;

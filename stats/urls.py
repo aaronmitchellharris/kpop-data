@@ -12,5 +12,8 @@ urlpatterns = [
     path('groups/alphabetical', views.GroupsViewAlpha.as_view(), name='alphabetical'),
     path('groups/oldest', views.GroupsViewOldest.as_view(), name='oldest'),
     path('groups/newest', views.GroupsViewNewest.as_view(), name='newest'),
-    path('profile/<int:pk>/<str:name>', views.ProfileView.as_view(), name='profile')
+    path('profile/<int:pk>/<str:name>', views.ProfileView.as_view(), name='profile'),
+    path('addvideos/', views.AddVideos.as_view(), name='addvideos'),
+    path('addvideos/<int:pk>/<str:name>', views.GroupEdit, name='groupedit'),
+    path('delete/', views.deleteVids, name='deletevids'),
 ]

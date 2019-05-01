@@ -1,0 +1,124 @@
+<!doctype html>
+
+{% load static %}
+
+<html>
+
+    <head>
+        <meta charset="'utf-8">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'stats/groupedit.css' %}">
+        <title></title>
+    </head>
+
+    <body style="background-color: rgb(186, 186, 186)">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a href="{% url 'stats:index' %}" class="navbar-brand">Home</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="'nav-item">
+                        <a class="nav-link" href="{% url 'stats:about' %}">About</a>
+                    </li>
+                    <li class="'nav-item">
+                        <a class="nav-link" href="{% url 'stats:groups' %}">Groups</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{% url 'stats:categories' %}" role="'button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Boys</a>
+                            <a class="dropdown-item" href="#">Girls</a>
+                            <a class="dropdown-item" href="#">Solo</a>
+                            <a class="dropdown-item" href="#">2nd Gen</a>
+                            <a class="dropdown-item" href="#">3rd Gen</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <h1>ADMIN PAGE</h1>
+        <h1>GroupEdit</h1>
+
+
+        {{ group }}
+
+        <script src="https://apis.google.com/js/api.js"></script>
+        <script>
+            var m, dic;
+            dic = [];
+            channel = "{{ channel }}"
+            function loadClient() {
+                gapi.client.setApiKey("AIzaSyDmyWkyolg4wqglm6HVed3-7zxuui9aVSU");
+                return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+                .then(function() { console.log("GAPI client loaded for API"); },
+                function(err) { console.error("Error loading GAPI client for API", err); });
+            }
+
+            function execute() {
+                return gapi.client.youtube.search.list({
+                    "part": "snippet",
+                    "channelId": channel,
+                    "maxResults": 30,
+                    "q": "intitle:(mv|m/v)&"+"{{ group }}",
+                    "type": "video"
+                    })
+                    .then(function(response) {
+                        // Handle the results here (response.result has the parsed body).
+                        console.log("Response", response);
+                        var i, j, hold, hold2;
+                        for (i=0;i<30;i++) {
+                            dic[i] = {"title":null, "publish":null, "videoId":null, "thumbnail":null};
+                            j = i.toString()
+                            hold = response["result"]["items"][i]["snippet"]["publishedAt"].split("T");
+                            document.getElementById(j).innerHTML = response["result"]["items"][i]["snippet"]["title"];
+                            hold2 = response["result"]["items"][i]["snippet"]["title"];
+                            dic[i]["title"] = hold2.replace("&#39;", "\'").replace("&#39;", "\'");
+                            dic[i]["publish"] = hold[0];
+                            dic[i]["videoId"] = response["result"]["items"][i]["id"]["videoId"];
+                            dic[i]["thumbnail"] = response["result"]["items"][i]["snippet"]["thumbnails"]["high"]["url"];
+                        }
+                    },
+                    function(err) { console.error("Execute error", err); });
+            }
+            gapi.load("client");
+
+            function fillForm(number) {
+                document.getElementById("id_group").value = {{ pk }}
+                document.getElementById("id_title").value = dic[number]["title"]
+                document.getElementById("id_upload_date").value = dic[number]["publish"]
+                document.getElementById("id_yt_video_id").value = dic[number]["videoId"]
+                document.getElementById("id_thumbnail_url").value = dic[number]["thumbnail"]
+            }
+
+        </script>
+        <button onclick="loadClient()">load</button>
+        <button onclick="execute()">execute</button>
+
+        <div class="row">
+        {% for i in i|rjust:30 %}
+            <div class="col-med-6" style="margin:2px">
+                <button class="btn" id="{{forloop.counter0}}" onclick="fillForm({{forloop.counter0}})"></button>
+            </div>
+        {% endfor %}
+        </div>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    </body>
+
+</html>
