@@ -46,10 +46,14 @@
         <h1>ADMIN PAGE</h1>
         <h1>AddVideos</h1>
 
-        <div>
-            {% for g in object_list %}
-                <a href="{% url 'stats:groupedit' g.pk g.name %}">{{ g }}</a>
-            {% endfor %}
+        <div class="row">
+            <ol>
+                {% for g in object_list %}
+                <div class="col-xl-12">
+                    <li><a href="{% url 'stats:groupedit' g.pk g.name %}">{{ g }}</a></li>
+                </div>
+                {% endfor %}
+            </ol>
         </div>
 
 

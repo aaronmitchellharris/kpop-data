@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
+from django.forms import modelformset_factory, inlineformset_factory
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.admin.views.decorators import staff_member_required
@@ -86,22 +87,26 @@ class GroupEdit(AdminStaffRequiredMixin, generic.DetailView):
     template_name = 'stats/groupedit.html'
     model = Group
 '''
-@staff_member_required
+#@staff_member_required
 def GroupEdit(request, pk, name):
+    group = Group.objects.get(pk=pk)
+    VidFormSet = inlineformset_factory(Group, Video, fields=('group','title','upload_date','yt_video_id','thumbnail_url'), extra=50)
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = VidForm(request.POST)
+        formset = VidFormSet(request.POST, request.FILES, instance=group)
         # check whether it's valid:
-        if form.is_valid():
+        if formset.is_valid():
             # process the data in form.cleaned_data as required
             # ...
-            form.save()
+            formset.save()
             # redirect to a new URL:
-
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = VidForm()
+        formset = VidFormSet(instance=group)
+
     channel = Group.objects.filter(name=name)[0].yt_channel_id
-    return render(request, 'stats/groupedit.html', {'form': form, 'group': name, 'pk':pk, 'channel':channel})
+
+    return render(request, 'stats/groupedit.html', {'formset': formset, 'group': name, 'pk':pk, 'channel':channel})
+

@@ -65,8 +65,8 @@
                 return gapi.client.youtube.search.list({
                     "part": "snippet",
                     "channelId": channel,
-                    "maxResults": 30,
-                    "q": "intitle:(mv|m/v)&"+"{{ group }}",
+                    "maxResults": 50,
+                    "q": "mv|m/v|music video|"+"{{ group }}",
                     "type": "video"
                     })
                     .then(function(response) {
@@ -79,7 +79,7 @@
                             hold = response["result"]["items"][i]["snippet"]["publishedAt"].split("T");
                             document.getElementById(j).innerHTML = response["result"]["items"][i]["snippet"]["title"];
                             hold2 = response["result"]["items"][i]["snippet"]["title"];
-                            dic[i]["title"] = hold2.replace("&#39;", "\'").replace("&#39;", "\'");
+                            dic[i]["title"] = hold2.replace("&#39;", "\'").replace("&#39;", "\'").replace("&quot;", "\"").replace("&quot;", "\"");
                             dic[i]["publish"] = hold[0];
                             dic[i]["videoId"] = response["result"]["items"][i]["id"]["videoId"];
                             dic[i]["thumbnail"] = response["result"]["items"][i]["snippet"]["thumbnails"]["high"]["url"];
@@ -90,11 +90,27 @@
             gapi.load("client");
 
             function fillForm(number) {
-                document.getElementById("id_group").value = {{ pk }}
-                document.getElementById("id_title").value = dic[number]["title"]
-                document.getElementById("id_upload_date").value = dic[number]["publish"]
-                document.getElementById("id_yt_video_id").value = dic[number]["videoId"]
-                document.getElementById("id_thumbnail_url").value = dic[number]["thumbnail"]
+                var g, t, u, yt, th, istr;
+                istr = number.toString()
+                g = "id_videos-" + istr + "-group";
+                t = "id_videos-" + istr + "-title";
+                u = "id_videos-" + istr + "-upload_date";
+                yt = "id_videos-" + istr + "-yt_video_id";
+                th = "id_videos-" + istr + "-thumbnail_url";
+
+                if (document.getElementById(t).value == "") {
+                    document.getElementById(g).value = {{ pk }}
+                    document.getElementById(t).value = dic[number]["title"]
+                    document.getElementById(u).value = dic[number]["publish"]
+                    document.getElementById(yt).value = dic[number]["videoId"]
+                    document.getElementById(th).value = dic[number]["thumbnail"]
+                 } else {
+                    document.getElementById(g).value = ""
+                    document.getElementById(t).value = ""
+                    document.getElementById(u).value = ""
+                    document.getElementById(yt).value = ""
+                    document.getElementById(th).value = ""
+                 }
             }
 
         </script>
@@ -102,19 +118,29 @@
         <button onclick="execute()">execute</button>
 
         <div class="row">
-        {% for i in i|rjust:30 %}
-            <div class="col-med-6" style="margin:2px">
-                <button class="btn" id="{{forloop.counter0}}" onclick="fillForm({{forloop.counter0}})"></button>
-            </div>
-        {% endfor %}
+            <ol>
+            {% for i in i|rjust:50 %}
+                <div class="col-xl-12" style="margin:20px">
+                    <li><button class="btn" id="{{forloop.counter0}}" onclick="fillForm({{forloop.counter0}})"></button></li>
+                </div>
+            {% endfor %}
+            </ol>
         </div>
 
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Submit">
-        </form>
-
+        <div class="row">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ formset.management_form }}
+                <ol>
+                {% for form in formset %}
+                    <div class="col-xl-12" style="margin:2px">
+                        <li>{{ form }}</li>
+                    </div>
+                {% endfor %}
+                </ol>
+                <input type="submit" value="Submit" style="margin:20px">
+            </form>
+        </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
