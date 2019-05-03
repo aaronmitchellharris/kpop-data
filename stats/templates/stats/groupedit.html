@@ -73,7 +73,7 @@
                         // Handle the results here (response.result has the parsed body).
                         console.log("Response", response);
                         var i, j, hold, hold2;
-                        for (i=0;i<30;i++) {
+                        for (i=0;i<50;i++) {
                             dic[i] = {"title":null, "publish":null, "videoId":null, "thumbnail":null};
                             j = i.toString()
                             hold = response["result"]["items"][i]["snippet"]["publishedAt"].split("T");
