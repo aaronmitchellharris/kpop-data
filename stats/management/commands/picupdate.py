@@ -9,7 +9,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for g in Group.objects.all():
-            vid = Video.objects.filter(group=g).order_by('upload_date').reverse()[0]
-            vid.updatePic()
-            g.pic_url = vid.thumbnail_url
-            g.save()
+            if Video.objects.filter(group=g):
+                vid = Video.objects.filter(group=g).order_by('upload_date').reverse()[0]
+                vid.updatePic()
+                g.pic_url = vid.thumbnail_url
+                g.save()

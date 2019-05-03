@@ -11,9 +11,10 @@ class Command(BaseCommand):
         for g in Group.objects.all():
             g.total_view_count = 0
             g.video_count = 0
-            for v in Video.objects.filter(group=g):
-                v.updateViews()
-                g.total_view_count += v.view_count
-                g.video_count += 1
-                v.save()
+            if Video.objects.filter(group=g):
+                for v in Video.objects.filter(group=g):
+                    v.updateViews()
+                    g.total_view_count += v.view_count
+                    g.video_count += 1
+                    v.save()
             g.save()
