@@ -2,20 +2,14 @@ $( function() {
     $( "#slider-range" ).slider({
       range: true,
       min: 1,
-      max: 12,
-      values: [ 0, 12 ],
+      max: 13,
+      values: [ 0, 13 ],
       slide: function( event, ui ) {
         if (ui.values[0] == ui.values[1]){
             $( "#amount" ).html(ui.values[0])
         } else {
         $( "#amount" ).html(ui.values[ 0 ] + '-' + ui.values[ 1 ] );
         }
-        var objects, i;
-        objects = document.getElementsByClassName("filterDiv");
-        for (i=0; i<objects.length; i++) {
-
-        }
-    }
       }
     });
     $( "#amount" ).html("1-12");
