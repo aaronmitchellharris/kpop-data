@@ -8,7 +8,7 @@ class Group(models.Model):
     name = models.CharField(max_length=200)
     debut_date = models.DateField('debut date')
     video_count = models.IntegerField(default=0)
-    total_view_count = models.IntegerField(default=0)
+    total_view_count = models.BigIntegerField(default=0)
     company = models.CharField(max_length=200)
     current_member_count = models.IntegerField(default=0)
     picture = models.ImageField(upload_to='gallery')
@@ -35,7 +35,7 @@ class Video(models.Model):
     group = models.ForeignKey(Group, related_name='videos', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     upload_date = models.DateField('upload date')
-    view_count = models.IntegerField(default=0)
+    view_count = models.BigIntegerField(default=0)
     yt_video_id = models.CharField(max_length=200)
     thumbnail_url = models.CharField(max_length=200, null=True)
 
