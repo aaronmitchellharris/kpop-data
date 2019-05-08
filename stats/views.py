@@ -26,7 +26,7 @@ class AboutView(generic.ListView):
 def GroupsView(request):
     object_list = Group.objects.all().order_by('total_view_count').reverse()
     sort = "Most Viewed"
-    company_list = Group.objects.order_by('company').distinct('company')
+    company_list = Group.objects.distinct() #order_by('company').distinct('company')
     return render(request, 'stats/groups.html', {"object_list": object_list, "sort": sort, "company_list": company_list})
 
 def GroupsViewHottest(request):

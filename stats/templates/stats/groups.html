@@ -61,7 +61,7 @@
                     <div id="companyBtnContainer">
                         <button class="btn cactive" onclick="filterSelection('anyCompany','company')"> Any</button>
                         {% for c in company_list %}
-                            <button class="btn" onclick="filterSelection(formatCompany('{{ c.company }}'),'company')"> {{ c.company }}</button>
+                            <button class="btn" onclick="filterSelection('{{ c.company }}','company')"> {{ c.company }}</button>
                         {% endfor %}
 
                         <!--

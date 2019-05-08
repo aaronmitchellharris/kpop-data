@@ -37,7 +37,11 @@ function checkFilter(group, f) {
 
 function filterSelection(c, select) {
   var objects, i, arr1;
+  if (select == "company") {
+    filters[select] = formatCompany(c);
+  } else {
   filters[select] = c;
+  }
   objects = document.getElementsByClassName("filterDiv");
   for (i=0; i<objects.length; i++) {
     w3RemoveClass(objects[i], "show");
@@ -118,6 +122,6 @@ for (var i = 0; i < cbtns.length; i++) {
 
 function formatCompany(c) {
     var hold;
-    hold = c.split("");
+    hold = c.split(" ");
     return hold[0]
 }
