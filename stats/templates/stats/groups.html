@@ -62,7 +62,7 @@
                       <button style="color:black; background-color:#ffc107" class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Any
                       </button>
-                      <div style="background-color:#f0ad4e" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <div style="background-color:#f0ad4e" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                           <button style="background-color: #f0ad4e" class="dropdown-item" type="button" onclick="filterSelection('anyCompany','company')"> Any</button>
                           {% for c in company_list %}
                               <button style="background-color: #f0ad4e" class="dropdown-item" type="button" onclick="filterSelection('{{ c.company }}','company')"> {{ c.company }}</button>
