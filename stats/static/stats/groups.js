@@ -123,5 +123,10 @@ for (var i = 0; i < cbtns.length; i++) {
 function formatCompany(c) {
     var hold;
     hold = c.split(" ");
+    if (c == 'anyCompany') {
+        $("#dropdownMenuButton").html('Any')
+    } else {
+        $("#dropdownMenuButton").html(c)
+    }
     return hold[0]
 }

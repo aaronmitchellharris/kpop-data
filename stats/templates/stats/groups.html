@@ -58,17 +58,16 @@
 
                 <div class="col">
                 <h3>Company</h3>
-                    <div id="companyBtnContainer">
-                        <button class="btn cactive" onclick="filterSelection('anyCompany','company')"> Any</button>
-                        {% for c in company_list %}
-                            <button class="btn" onclick="filterSelection('{{ c.company }}','company')"> {{ c.company }}</button>
-                        {% endfor %}
-
-                        <!--
-                        <button class="btn" onclick="filterSelection('YG','company')"> YG</button>
-                        <button class="btn" onclick="filterSelection('JYP','company')"> JYP</button>
-                        <button class="btn" onclick="filterSelection('Big','company')"> Big Hit</button>
-                        -->
+                    <div class="dropdown" id="companyBtnContainer">
+                      <button style="color:black; background-color:#ffc107" class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Any
+                      </button>
+                      <div style="background-color:#f0ad4e" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <button style="background-color: #f0ad4e" class="btn" onclick="filterSelection('anyCompany','company')"> Any</button>
+                          {% for c in company_list %}
+                              <button style="background-color: #f0ad4e" class="btn" onclick="filterSelection('{{ c.company }}','company')"> {{ c.company }}</button>
+                          {% endfor %}
+                      </div>
                     </div>
                 </div>
 
