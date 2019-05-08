@@ -23,39 +23,36 @@ class AboutView(generic.ListView):
     template_name = 'stats/about.html'
     model = Group
 
-class GroupsView(generic.ListView):
-    template_name = 'stats/groups.html'
-    model = Group
-    def get_queryset(self):
-        return Group.objects.all().order_by('total_view_count').reverse()
+def GroupsView(request):
+    object_list = Group.objects.all().order_by('total_view_count').reverse()
+    sort = "Most Viewed"
+    company_list = Group.objects.order_by('company').distinct('company')
+    return render(request, 'stats/groups.html', {"object_list": object_list, "sort": sort, "company_list": company_list})
 
-class GroupsViewHottest(generic.ListView):
-    template_name = 'stats/groups.html'
-    model = Group
-    def get_queryset(self):
-        return Group.objects.all().order_by('total_view_count').reverse()
+def GroupsViewHottest(request):
+    object_list = Group.objects.all().order_by('total_view_count').reverse()
+    sort = "Hottest"
+    return render(request, 'stats/groups.html', {"object_list":object_list, "sort":sort})
 
-class GroupsViewAlpha(generic.ListView):
-    template_name = 'stats/groups.html'
-    model = Group
-    def get_queryset(self):
-        return Group.objects.all().order_by('name')
+def GroupsViewAlpha(request):
+    object_list = Group.objects.all().order_by('name')
+    sort = "Alphabetical"
+    return render(request, 'stats/groups.html', {"object_list": object_list, "sort": sort})
 
-class GroupsViewOldest(generic.ListView):
-    template_name = 'stats/groups.html'
-    model = Group
-    def get_queryset(self):
-        return Group.objects.all().order_by('debut_date')
+def GroupsViewOldest(request):
+    object_list = Group.objects.all().order_by('debut_date')
+    sort = "Oldest"
+    return render(request, 'stats/groups.html', {"object_list": object_list, "sort": sort})
 
-class GroupsViewNewest(generic.ListView):
-    template_name = 'stats/groups.html'
-    model = Group
-    def get_queryset(self):
-        return Group.objects.all().order_by('debut_date').reverse()
+def GroupsViewNewest(request):
+    object_list = Group.objects.all().order_by('debut_date').reverse()
+    sort = "Newest"
+    return render(request, 'stats/groups.html', {"object_list": object_list, "sort": sort})
 
-class ProfileView(generic.DetailView):
-    template_name = 'stats/profile.html'
-    model = Group
+def ProfileView(request, pk, name):
+    group = Group.objects.get(pk=pk)
+    vid_list = Video.objects.filter(group=pk).order_by('upload_date').reverse()
+    return render(request, 'stats/profile.html', {'group':group, 'vid_list':vid_list})
 
 class CategoriesView(generic.ListView):
     template_name = 'stats/categories.html'
