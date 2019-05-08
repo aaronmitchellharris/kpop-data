@@ -115,3 +115,9 @@ for (var i = 0; i < cbtns.length; i++) {
     this.className += " cactive";
   });
 }
+
+function formatCompany(c) {
+    var hold;
+    hold = c.split("");
+    return hold[0]
+}
