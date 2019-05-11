@@ -2,8 +2,8 @@ $( function() {
     $( "#slider-range" ).slider({
       range: true,
       min: 1,
-      max: 13,
-      values: [ 1, 13 ],
+      max: 18,
+      values: [ 1, 18 ],
       slide: function( event, ui ) {
         if (ui.values[0] == ui.values[1]){
             $( "#amount" ).html(ui.values[0])
@@ -18,7 +18,7 @@ $( function() {
         }
       }
     });
-    $( "#amount" ).html("1-13");
+    $( "#amount" ).html("1-18");
   } );
 
 
@@ -58,7 +58,7 @@ var filters;
 filters = {
     'gender':'anyGender',
     'company':'anyCompany',
-    'memberCount':['1','2','3','4','5','6','7','8','9','10','11','12','13'],
+    'memberCount':['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18'],
 };
 
 function checkFilter(group, f) {
