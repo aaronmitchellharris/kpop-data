@@ -3,32 +3,75 @@ $( function() {
       range: true,
       min: 1,
       max: 13,
-      values: [ 0, 13 ],
+      values: [ 1, 13 ],
       slide: function( event, ui ) {
         if (ui.values[0] == ui.values[1]){
             $( "#amount" ).html(ui.values[0])
+            countAdjust(ui.values[0], 'down');
+            countAdjust(ui.values[1], 'up');
+            filterSelection('', 'memberCount')
         } else {
-        $( "#amount" ).html(ui.values[ 0 ] + '-' + ui.values[ 1 ] );
+            $( "#amount" ).html(ui.values[ 0 ] + '-' + ui.values[ 1 ] );
+            countAdjust(ui.values[0], 'down');
+            countAdjust(ui.values[1], 'up');
+            filterSelection('', 'memberCount')
         }
       }
     });
-    $( "#amount" ).html("1-12");
+    $( "#amount" ).html("1-13");
   } );
+
+
+function countAdjust(number, direction) {
+    var i;
+    if (direction == 'up') {
+        for (i=0; i<filters['memberCount'].length; i++) {
+            if (number < filters['memberCount'][i]) {
+                filters['memberCount'].splice(i, 1)
+            }
+        }
+        if (number > Math.max.apply(null, filters['memberCount'])) {
+            for (i=Math.max.apply(null, filters['memberCount'])+1; i<=number; i++) {
+                filters['memberCount'].push(i.toString());
+            }
+        }
+    }
+    if (direction == 'down') {
+        for (i=0; i<filters['memberCount'].length; i++) {
+            if (number > filters['memberCount'][i]) {
+                filters['memberCount'].splice(i, 1)
+            }
+        }
+        if (number < Math.min.apply(null, filters['memberCount'])) {
+            for (i=number; i<=Math.min.apply(null, filters['memberCount']); i++) {
+                filters['memberCount'].unshift(i.toString());
+            }
+        }
+    }
+}
+
+
+
 
 var filters;
 /*filters = ""*/
 filters = {
     'gender':'anyGender',
     'company':'anyCompany',
-    'generation':'anyGeneration',
-    'memberCount':'anyMemberCount'
+    'memberCount':['1','2','3','4','5','6','7','8','9','10','11','12','13'],
 };
 
 function checkFilter(group, f) {
-    var classList, i;
+    var classList, i, j;
     classList = group.className.split(" ");
     for (i=0; i<classList.length; i++) {
-        if (filters[f] == classList[i]) {
+        if (f == 'memberCount'){
+            for (j=0; j<filters['memberCount'].length; j++){
+                if (filters[f][j] == classList[i]) {
+                    return true
+                }
+            }
+        } else if (filters[f] == classList[i]) {
             return true;
         }
     }
@@ -39,41 +82,19 @@ function filterSelection(c, select) {
   var objects, i, arr1;
   if (select == "company") {
     filters[select] = formatCompany(c);
+  } else if (select == 'memberCount') {
   } else {
   filters[select] = c;
   }
   objects = document.getElementsByClassName("filterDiv");
   for (i=0; i<objects.length; i++) {
     w3RemoveClass(objects[i], "show");
-    if (checkFilter(objects[i], 'gender') & checkFilter(objects[i], 'company')) {
+    if (checkFilter(objects[i], 'gender') & checkFilter(objects[i], 'company') & checkFilter(objects[i], 'memberCount')) {
         w3AddClass(objects[i], "show");
     }
   }
 }
 
-function resetFilter(bundle) {
-    var i, arr1;
-    if (bundle == "Gender") {
-        arr1 = filters.split(" ")
-        for (i=0; i<arr1.length; i++) {
-            if (arr1[i] == 'B' | arr1[i] == 'G') {
-                arr1.splice(i, 1);
-                i--;
-                filters = arr1.join(" ");
-            }
-        }
-    } else if (bundle == "Company") {
-        arr1 = filters.split(" ")
-        for (i=0; i<arr1.length; i++) {
-            if (arr1[i] == 'YG' | arr1[i] == 'JYP' | arr1[i] == 'Big') {
-                arr1.splice(i, 1);
-                i--;
-                filters = arr1.join(" ");
-            }
-        }
-    }
-    filterSelection("all");
-}
 // Show filtered elements
 function w3AddClass(element, name) {
   var i, arr1, arr2;
