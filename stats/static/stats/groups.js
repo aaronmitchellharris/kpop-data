@@ -21,7 +21,6 @@ $( function() {
     $( "#amount" ).html("1-18");
   } );
 
-
 function countAdjust(number, direction) {
     var i;
     if (direction == 'up') {
@@ -49,9 +48,6 @@ function countAdjust(number, direction) {
         }
     }
 }
-
-
-
 
 var filters;
 /*filters = ""*/

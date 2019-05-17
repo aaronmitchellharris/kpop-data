@@ -4,8 +4,7 @@
 }
 
 #groups {
-    margin-left:20px;
-    margin-top: 20px;
+
 }
 
 #buttons {
@@ -25,6 +24,21 @@
 /* The "show" class is added to the filtered elements */
 .show {
   display: block;
+  margin: auto;
+  margin-top: 20px;
+  padding: 5px;
+}
+
+.show a {
+    text-decoration: none;
+}
+
+.card-text {
+    color: white;
+}
+
+.show a:hover .card-text {
+    color: #ffc107;
 }
 
 /* Style the buttons */
