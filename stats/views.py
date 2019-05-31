@@ -26,31 +26,31 @@ class AboutView(generic.ListView):
 def GroupsView(request):
     object_list = Group.objects.all().order_by('total_view_count').reverse()
     sort = "Most Viewed"
-    company_list = Group.objects.order_by('company').distinct('company')
+    company_list = Group.objects.order_by('company')#.distinct('company')
     return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
 def GroupsViewHottest(request):
     object_list = Group.objects.all().order_by('total_view_count').reverse()
     sort = "Hottest"
-    company_list = Group.objects.order_by('company').distinct('company')
+    company_list = Group.objects.order_by('company')#.distinct('company')
     return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
 def GroupsViewAlpha(request):
     object_list = Group.objects.all().order_by('name')
     sort = "Alphabetical"
-    company_list = Group.objects.order_by('company').distinct('company')
+    company_list = Group.objects.order_by('company')#.distinct('company')
     return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
 def GroupsViewOldest(request):
     object_list = Group.objects.all().order_by('debut_date')
     sort = "Oldest"
-    company_list = Group.objects.order_by('company').distinct('company')
+    company_list = Group.objects.order_by('company')#.distinct('company')
     return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
 def GroupsViewNewest(request):
     object_list = Group.objects.all().order_by('debut_date').reverse()
     sort = "Newest"
-    company_list = Group.objects.order_by('company').distinct('company')
+    company_list = Group.objects.order_by('company')#.distinct('company')
     return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
 def ProfileView(request, pk, name):
@@ -62,32 +62,30 @@ class CategoriesView(generic.ListView):
     template_name = 'stats/categories.html'
     model = Group
 
-def deleteVids(request):
-    Video.objects.all().delete()
-    context={}
-    return render(request,'stats/groupedit.html',context)
+#def deleteVids(request):
+#    Video.objects.all().delete()
+#    context={}
+#    return render(request,'stats/groupedit.html',context)
+
+def GraphView(request, gender):
+
+    if gender == 'all':
+        group = Group.objects.all()
+    else:
+        group = Group.objects.filter(gender=gender)
+    videos = []
+
+    for g in group:
+        if Video.objects.filter(group=g):
+            videos.append(Video.objects.filter(group=g).order_by('view_count')[0].view_count)
 
 
-'''
-@staff_member_required
-def AddVideos(request):
-    template_name = 'stats/addvideos.html'
-    try:
-        g = Group.objects.all()
-    except Group.DoesNotExist:
-        raise Http404("Group does not exist")
-    return render(request, template_name, {'group': g})
-'''
+    return render(request, 'stats/graph.html', {'group':group, 'videos':videos})
 
 class AddVideos(AdminStaffRequiredMixin, generic.ListView):
     template_name = 'stats/addvideos.html'
     model = Group
 
-'''
-class GroupEdit(AdminStaffRequiredMixin, generic.DetailView):
-    template_name = 'stats/groupedit.html'
-    model = Group
-'''
 #@staff_member_required
 def GroupEdit(request, pk, name):
     group = Group.objects.get(pk=pk)

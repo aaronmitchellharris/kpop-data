@@ -15,5 +15,6 @@ urlpatterns = [
     path('profile/<int:pk>/<str:name>', views.ProfileView, name='profile'),
     path('addvideos/', views.AddVideos.as_view(), name='addvideos'),
     path('addvideos/<int:pk>/<str:name>', views.GroupEdit, name='groupedit'),
-    path('delete/', views.deleteVids, name='deletevids'),
+    #path('delete/', views.deleteVids, name='deletevids'),
+    path('graph/<str:gender>', views.GraphView, name='graph'),
 ]

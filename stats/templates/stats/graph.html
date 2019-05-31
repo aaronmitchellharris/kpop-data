@@ -1,0 +1,89 @@
+<!doctype html>
+
+{% load static %}
+
+<html>
+
+    <head>
+        <meta charset="'utf-8">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'stats/graph.css' %}">
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages': ['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = new google.visualization.arrayToDataTable([
+                    ['Name', 'Views', {role: 'style'}],
+                    {% for g in group %}
+                        ['{{ g }}', {{ g.total_view_count }}, getRandomColor()],
+                    {% endfor %}
+                ]);
+
+                var options = {
+                    'title' : 'Views',
+                };
+
+                var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            };
+
+
+
+        </script>
+        <title></title>
+    </head>
+
+    <body style="background-color: rgb(186, 186, 186)">
+
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+            <a href="{% url 'stats:index' %}" class="navbar-brand">Home</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <ul class="navbar-nav">
+                    <li class="'nav-item">
+                        <a class="nav-link" href="{% url 'stats:about' %}">About</a>
+                    </li>
+                    <li class="'nav-item">
+                        <a class="nav-link" href="{% url 'stats:groups' %}">Groups</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <h1>Graph</h1>
+        <h1>Graph</h1>
+
+        <div class="container-fluid">
+            <div class="row" id="buttons">
+                <div class="col">
+                    <h3>Gender</h3>
+                    <div id="genderBtnContainer">
+                        <a class="btn" href="{% url 'stats:graph' 'all' %}">All</a>
+                        <a class="btn" href="{% url 'stats:graph' 'B' %}">Boys</a>
+                        <a class="btn" href="{% url 'stats:graph' 'G' %}">Girls</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="jumbotron jumbotron-fluid bg-dark">
+            <div class="container" id="chart_div"></div>
+        </div>
+
+        <script src="{% static 'stats/graph.js' %}"></script>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    </body>
+
+</html>
