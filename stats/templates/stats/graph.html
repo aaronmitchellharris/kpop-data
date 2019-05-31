@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{% static 'stats/graph.css' %}">
 
+
+
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
             google.charts.load('current', {'packages': ['corechart']});
@@ -25,6 +27,75 @@
 
                 var options = {
                     'title' : 'Views',
+                    'height': 5000,
+                };
+
+                var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            };
+
+            function drawChartBest() {
+                var data = new google.visualization.arrayToDataTable([
+                    ['Name', 'Views', {role: 'style'}],
+                    {% for v in videos %}
+                        ['{{ v.group }}', {{ v.view_count }}, getRandomColor()],
+                    {% endfor %}
+                ]);
+
+                var options = {
+                    'title' : 'Views',
+                    'height': 5000,
+                };
+
+                var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            };
+
+            function drawChartLast() {
+                var data = new google.visualization.arrayToDataTable([
+                    ['Name', 'Views', {role: 'style'}],
+                    {% for v in last %}
+                        ['{{ v.group }}', {{ v.view_count }}, getRandomColor()],
+                    {% endfor %}
+                ]);
+
+                var options = {
+                    'title' : 'Views',
+                    'height': 5000,
+                };
+
+                var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            };
+
+            function drawChartTop() {
+                var data = new google.visualization.arrayToDataTable([
+                    ['Name', 'Views', {role: 'style'}],
+                    {% for v in top %}
+                        ['{{ v.0 }}', {{ v.1 }}, getRandomColor()],
+                    {% endfor %}
+                ]);
+
+                var options = {
+                    'title' : 'Views',
+                    'height': 5000,
+                };
+
+                var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            };
+
+            function drawChartRecent() {
+                var data = new google.visualization.arrayToDataTable([
+                    ['Name', 'Views', {role: 'style'}],
+                    {% for v in recent %}
+                        ['{{ v.0 }}', {{ v.1 }}, getRandomColor()],
+                    {% endfor %}
+                ]);
+
+                var options = {
+                    'title' : 'Views',
+                    'height': 5000,
                 };
 
                 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -66,9 +137,20 @@
                 <div class="col">
                     <h3>Gender</h3>
                     <div id="genderBtnContainer">
-                        <a class="btn" href="{% url 'stats:graph' 'all' %}">All</a>
-                        <a class="btn" href="{% url 'stats:graph' 'B' %}">Boys</a>
-                        <a class="btn" href="{% url 'stats:graph' 'G' %}">Girls</a>
+                        <a class="btn" id="All" href="{% url 'stats:graph' 'all' %}">All</a>
+                        <a class="btn" id="Boys" href="{% url 'stats:graph' 'B' %}">Boys</a>
+                        <a class="btn" id="Girls" href="{% url 'stats:graph' 'G' %}">Girls</a>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <h3>Filter</h3>
+                    <div id="filterBtnContainer">
+                        <button class="btn gactive" onclick="drawChart()">All</button>
+                        <button class="btn" onclick="drawChartBest()">Best</button>
+                        <button class="btn" onclick="drawChartTop()">Top</button>
+                        <button class="btn" onclick="drawChartLast()">Last</button>
+                        <button class="btn" onclick="drawChartRecent()">Recent</button>
                     </div>
                 </div>
             </div>
@@ -77,6 +159,20 @@
         <div class="jumbotron jumbotron-fluid bg-dark">
             <div class="container" id="chart_div"></div>
         </div>
+
+        <script>
+            if ('{{ gender }}' == 'all') {
+                document.getElementById("All").className += " cactive"
+            }
+
+            if ('{{ gender }}' == 'B') {
+                document.getElementById("Boys").className += " cactive"
+            }
+
+            if ('{{ gender }}' == 'G') {
+                document.getElementById("Girls").className += " cactive"
+            }
+        </script>
 
         <script src="{% static 'stats/graph.js' %}"></script>
 

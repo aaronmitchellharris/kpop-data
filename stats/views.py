@@ -70,17 +70,30 @@ class CategoriesView(generic.ListView):
 def GraphView(request, gender):
 
     if gender == 'all':
-        group = Group.objects.all()
+        group = Group.objects.all().order_by('total_view_count').reverse()
     else:
-        group = Group.objects.filter(gender=gender)
+        group = Group.objects.filter(gender=gender).order_by('total_view_count').reverse()
     videos = []
-
+    last = []
+    top = []
+    recent = []
     for g in group:
         if Video.objects.filter(group=g):
-            videos.append(Video.objects.filter(group=g).order_by('view_count')[0].view_count)
+            videos.append(Video.objects.filter(group=g).order_by('view_count').reverse()[0])
+            last.append(Video.objects.filter(group=g).order_by('upload_date').reverse()[0])
 
+            temptop = [g, 0]
+            temprecent = [g, 0]
+            for i in range(3):
+                temptop[1] += Video.objects.filter(group=g).order_by('view_count').reverse()[i].view_count
 
-    return render(request, 'stats/graph.html', {'group':group, 'videos':videos})
+                temprecent[1] += Video.objects.filter(group=g).order_by('upload_date').reverse()[i].view_count
+
+            top.append(temptop)
+            recent.append(temprecent)
+
+    return render(request, 'stats/graph.html', {'group':group, 'videos':videos, 'last':last, 'top':top, 'recent':recent,
+                  'gender':gender})
 
 class AddVideos(AdminStaffRequiredMixin, generic.ListView):
     template_name = 'stats/addvideos.html'

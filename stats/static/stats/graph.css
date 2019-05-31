@@ -1,0 +1,35 @@
+.row {
+    margin-right: 0px
+    margin-left: 0px
+}
+
+#groups {
+
+}
+
+#buttons {
+    text-align: center;
+}
+
+
+
+.container {
+  overflow: hidden;
+}
+
+.btn:hover {
+  background-color: #ddd;
+}
+
+.btn {
+    background: #f0ad4e;
+}
+
+/* Add a dark background to the active button */
+.btn.gactive {
+  background-color: #ffc107;
+}
+
+.btn.cactive {
+  background-color: #ffc107;
+}
