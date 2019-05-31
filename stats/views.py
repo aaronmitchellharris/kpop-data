@@ -84,10 +84,12 @@ def GraphView(request, gender):
 
             temptop = [g, 0]
             temprecent = [g, 0]
-            for i in range(3):
-                try:
+
+            if Video.objects.filter(group=g).length >= 3:
+                for i in range(3):
+
                     temptop[1] += Video.objects.filter(group=g).order_by('view_count').reverse()[i].view_count
-                try:
+
                     temprecent[1] += Video.objects.filter(group=g).order_by('upload_date').reverse()[i].view_count
 
             top.append(temptop)
