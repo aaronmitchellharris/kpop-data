@@ -21,13 +21,13 @@
                 var data = new google.visualization.arrayToDataTable([
                     ['Name', 'Views', {role: 'style'}],
                     {% for g in group %}
-                        ['{{ g }}', {{ g.total_view_count }}, getRandomColor()],
+                        ['{{ g }}'.replace("&#39;", "\'"), {{ g.total_view_count }}, getRandomColor()],
                     {% endfor %}
                 ]);
 
                 var options = {
                     'title' : 'Views',
-                    'height': 4000,
+                    'height': 5000,
                 };
 
                 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -44,7 +44,7 @@
 
                 var options = {
                     'title' : 'Views',
-                    'height': 4000,
+                    'height': 5000,
                 };
 
                 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -61,7 +61,7 @@
 
                 var options = {
                     'title' : 'Views',
-                    'height': 4000,
+                    'height': 5000,
                 };
 
                 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -78,7 +78,7 @@
 
                 var options = {
                     'title' : 'Views',
-                    'height': 4000,
+                    'height': 5000,
                 };
 
                 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -95,7 +95,7 @@
 
                 var options = {
                     'title' : 'Views',
-                    'height': 4000,
+                    'height': 5000,
                 };
 
                 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
