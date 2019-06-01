@@ -33,3 +33,7 @@
 .btn.cactive {
   background-color: #ffc107;
 }
+
+#buttons {
+    margin-bottom: 10px;
+}
