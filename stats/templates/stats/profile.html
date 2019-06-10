@@ -15,6 +15,7 @@
         <script type="text/javascript">
             google.charts.load('current', {'packages': ['corechart']});
             google.charts.setOnLoadCallback(drawChart);
+            google.charts.setOnLoadCallback(drawChart2);
 
             function drawChart() {
                 var data = new google.visualization.arrayToDataTable([
@@ -23,20 +24,6 @@
                         [new Date({{ v.upload_date|date:"U" }} * 1000), {{ v.view_count }}],
                     {% endfor %}
                 ]);
-
-                //var data = new google.visualization.DataTable();
-                //data.addColumn('date', 'Upload Date');
-                //data.addColumn('number', 'Views');
-
-                //data.addRows([
-                    //{% for v in video_list %}
-                    //    [{{ v.upload_date}}, {{ v.view_count }}],
-                    //{% endfor %}
-                    //[new Date(2017, 4, 2), 2009323]
-                //]);
-                //{% for v in video_list %}
-                //    data.addRow([{{ v.upload_date}}, {{ v.view_count }}])
-                //{% endfor %}
 
                 var options = {
                     'height': 500,
@@ -49,9 +36,9 @@
                         gridlines: {
                             count: -1,
                             color: 'black',
-                                units: {
-                                    years: {format:'yy'},
-                                }
+                        },
+                        minorGridlines: {
+                            count: 0
                         }
                     },
                     vAxis: {
@@ -59,14 +46,50 @@
                         minValue: 0,
                         maxValue: {{maxVid.view_count}},
                         gridlines: {
-                            count: -1,
+                            count: 2,
                             color: 'black'
                         }
                     },
                 };
 
-
                 var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            };
+
+            function drawChart2() {
+                var data = new google.visualization.arrayToDataTable([
+                    ['Month', 'Videos'],
+                    {% for d in dV %}
+                        [{{ d.0 }}, {{ d.1 }}],
+                    {% endfor %}
+                ]);
+
+                var options = {
+                    'height': 500,
+                    'width': 1000,
+                    'legend': 'none',
+                    bar: {groupWidth: "95%"},
+                    backgroundColor: '#E9ECEF',
+                    hAxis: {
+                        title: 'Month Uploaded',
+                        gridlines: {
+                            count: 12,
+                            color: 'black',
+                        },
+                        minorGridlines: {
+                            count: 0
+                        }
+                    },
+                    vAxis: {
+                        title: '# of Videos',
+                        gridlines: {
+                            count: 2,
+                            color: 'black'
+                        }
+                    },
+                };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('graph_div'));
                 chart.draw(data, options);
             };
 
@@ -109,9 +132,8 @@
             <h3>Total MV View Count: {{ group.total_view_count|intcomma }}</h3>
         </div>
 
-
         <a class="btn btn-dark container holder choose" href="#chart" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
-            Chart
+            Music Video Views by Date
         </a>
 
         <div class="collapse container" id="chart">
@@ -120,8 +142,18 @@
             </div>
         </div>
 
+        <a class="btn btn-dark container holder choose" href="#graph" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+            Number of Music Videos Uploaded by Month
+        </a>
+
+        <div class="collapse container" id="graph">
+            <div class="card card-body">
+                <div class="holder" id="graph_div" align="center"></div>
+            </div>
+        </div>
+
         <a class="btn btn-dark container holder choose" href="#videos" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseOne">
-            Videos
+            Music Videos
         </a>
 
         <div class="container collapse show" id="videos">

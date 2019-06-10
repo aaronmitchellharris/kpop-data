@@ -6,6 +6,8 @@ from django.forms import modelformset_factory, inlineformset_factory
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models.functions import TruncMonth, ExtractMonth
+from django.db.models import Count
 from .models import Group, Video
 from . import vids
 from .forms import VidForm
@@ -57,7 +59,13 @@ def ProfileView(request, pk, name):
     group = Group.objects.get(pk=pk)
     vid_list = Video.objects.filter(group=pk).order_by('upload_date').reverse()
     maxVid = Video.objects.filter(group=pk).order_by('view_count').reverse()[0]
-    return render(request, 'stats/profile.html', {'group':group, 'vid_list':vid_list, 'maxVid':maxVid})
+    dateVids = Video.objects.filter(group=pk).annotate(month=ExtractMonth('upload_date')).values('month').annotate(
+        c=Count('id')).values('month', 'c')
+    dV = [[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],[11,0],[12,0]]
+    for v in dateVids:
+        dV[v['month']][1] = v['c']
+    return render(request, 'stats/profile.html', {'group':group, 'vid_list':vid_list, 'maxVid':maxVid,
+                                                  'dV':dV})
 
 class CategoriesView(generic.ListView):
     template_name = 'stats/categories.html'
