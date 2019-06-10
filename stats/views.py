@@ -56,7 +56,8 @@ def GroupsViewNewest(request):
 def ProfileView(request, pk, name):
     group = Group.objects.get(pk=pk)
     vid_list = Video.objects.filter(group=pk).order_by('upload_date').reverse()
-    return render(request, 'stats/profile.html', {'group':group, 'vid_list':vid_list})
+    maxVid = Video.objects.filter(group=pk).order_by('view_count').reverse()[0]
+    return render(request, 'stats/profile.html', {'group':group, 'vid_list':vid_list, 'maxVid':maxVid})
 
 class CategoriesView(generic.ListView):
     template_name = 'stats/categories.html'

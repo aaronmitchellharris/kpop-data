@@ -7,11 +7,13 @@
 
 }
 
+.topButton {
+    margin-top: 70px;
+}
+
 #buttons {
     text-align: center;
 }
-
-
 
 .container {
   overflow: hidden;

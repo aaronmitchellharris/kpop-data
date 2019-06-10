@@ -19,7 +19,7 @@
         <title></title>
     </head>
 
-    <body style="background-color: rgb(186, 186, 186)">
+    <body>
 
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <a href="{% url 'stats:index' %}" class="navbar-brand">Home</a>
@@ -46,7 +46,7 @@
         <h1>Groups</h1>
         <h1>Groups</h1>
 
-        <h2 style="text-align: center">Filter by:</h2>
+        <h2 id="FilterBy">Filter by:</h2>
 
         <div class="container-fluid">
             <div class="row" id="buttons">
@@ -61,14 +61,14 @@
 
                 <div class="col">
                 <h3>Company</h3>
-                    <div class="dropdown" id="companyBtnContainer">
-                      <button style="color:black; background-color:#ffc107" class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-flip="false" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="dropdown">
+                      <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-flip="false" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Any
                       </button>
-                      <div style="background-color:#f0ad4e" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <button style="background-color: #f0ad4e" class="dropdown-item" type="button" onclick="filterSelection('anyCompany','company')"> Any</button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <button class="dropdown-item" type="button" onclick="filterSelection('anyCompany','company')"> Any</button>
                           {% for c in company_list %}
-                              <button style="background-color: #f0ad4e" class="dropdown-item" type="button" onclick="filterSelection('{{ c.company }}','company')"> {{ c.company }}</button>
+                              <button class="dropdown-item" type="button" onclick="filterSelection('{{ c.company }}','company')"> {{ c.company }}</button>
                           {% endfor %}
                       </div>
                     </div>
@@ -81,11 +81,11 @@
                 </div>
 
                 <div class="col dropdown">
-                    <a style="color:black; background-color:#ffc107" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ sort }}
                     </a>
 
-                    <div style="background-color:#f0ad4e" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="{% url 'stats:groups' %}">Most Viewed</a>
                         <a class="dropdown-item" href="{% url 'stats:hottest' %}">Hottest</a>
                         <a class="dropdown-item" href="{% url 'stats:alphabetical' %}">Alphabetical</a>
@@ -99,11 +99,11 @@
         <div class="container-fluid">
             <div class="row" id="groups">
             {% for g in object_list %}
-                 <div class="col-xs-2 col-xs-offset-5 filterDiv {{ g.gender }} {{ g.company }} {{ g.current_member_count }} anyGender anyCompany anyMemberCount show">
+                 <div class="col-xs-2 col-xs-offset-5 filterDiv {{ g.gender }} {{ g.company }} {{ g.current_member_count }} anyGender anyCompany anyMemberCount choose">
                      <a href="{% url 'stats:profile' g.pk g.name %}">
-                         <div class="card bg-dark" style="width: 18rem;">
+                         <div class="card bg-dark"">
                              <img src="{{ g.pic_url }}" class="card-img-top" alt="...">
-                             <div class="card-body" style="background-color:black">
+                             <div class="card-body">
                                  <p class="card-text">{{ g }}</p>
                                  <p class="card-text">Views: {{ g.total_view_count|intcomma }}</p>
                              </div>

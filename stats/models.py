@@ -3,7 +3,6 @@ from django.utils import timezone
 from . import yt
 import datetime
 
-
 class Group(models.Model):
     name = models.CharField(max_length=200)
     debut_date = models.DateField('debut date')

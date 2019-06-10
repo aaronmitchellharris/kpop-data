@@ -84,14 +84,14 @@ function filterSelection(c, select) {
   }
   objects = document.getElementsByClassName("filterDiv");
   for (i=0; i<objects.length; i++) {
-    w3RemoveClass(objects[i], "show");
+    w3RemoveClass(objects[i], "choose");
     if (checkFilter(objects[i], 'gender') & checkFilter(objects[i], 'company') & checkFilter(objects[i], 'memberCount')) {
-        w3AddClass(objects[i], "show");
+        w3AddClass(objects[i], "choose");
     }
   }
 }
 
-// Show filtered elements
+// choose filtered elements
 function w3AddClass(element, name) {
   var i, arr1, arr2;
   arr1 = element.className.split(" ");
@@ -127,15 +127,15 @@ for (var i = 0; i < gbtns.length; i++) {
   });
 }
 
-var cbtnContainer = document.getElementById("companyBtnContainer");
-var cbtns = cbtnContainer.getElementsByClassName("btn");
-for (var i = 0; i < cbtns.length; i++) {
-  cbtns[i].addEventListener("click", function() {
-    var current = document.getElementsByClassName("cactive");
-    current[0].className = current[0].className.replace(" cactive", "");
-    this.className += " cactive";
-  });
-}
+//var cbtnContainer = document.getElementById("companyBtnContainer");
+//var cbtns = cbtnContainer.getElementsByClassName("btn");
+//for (var i = 0; i < cbtns.length; i++) {
+//  cbtns[i].addEventListener("click", function() {
+//    var current = document.getElementsByClassName("cactive");
+//    current[0].className = current[0].className.replace(" cactive", "");
+//    this.className += " cactive";
+//  });
+//}
 
 function formatCompany(c) {
     var hold;

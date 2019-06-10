@@ -12,7 +12,7 @@
         <title></title>
     </head>
 
-    <body style="background-color: rgb(186, 186, 186)">
+    <body>
 
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <a href="{% url 'stats:index' %}" class="navbar-brand">Home</a>
@@ -113,7 +113,7 @@
         <div class="row">
             <ol>
             {% for i in i|rjust:50 %}
-                <div class="col-xl-12" style="margin:20px">
+                <div class="col-xl-12 fillButton">
                     <li><button class="btn" id="{{forloop.counter0}}" onclick="fillForm({{forloop.counter0}})"></button></li>
                 </div>
             {% endfor %}
@@ -126,12 +126,12 @@
                 {{ formset.management_form }}
                 <ol>
                 {% for form in formset %}
-                    <div class="col-xl-12" style="margin:2px">
+                    <div class="col-xl-12 formStuff">
                         <li>{{ form }}</li>
                     </div>
                 {% endfor %}
                 </ol>
-                <input type="submit" value="Submit" style="margin:20px">
+                <input type="submit" value="Submit" id="submitButton">
             </form>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

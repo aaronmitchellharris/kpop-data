@@ -9,6 +9,17 @@
     background: #f0ad4e;
 }
 
+.fillButton {
+    margin:20px
+}
+
+.formStuff {
+    margin:2px
+}
+
+#submitButton {
+    margin:20px
+}
 
 /*! jQuery UI - v1.12.1 - 2019-04-21
 * http://jqueryui.com

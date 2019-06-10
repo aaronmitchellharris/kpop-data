@@ -3,6 +3,10 @@
     margin-left: 0px
 }
 
+#FilterBy {
+    text-align: center
+}
+
 #groups {
 
 }
@@ -21,23 +25,47 @@
   display: none; /* Hidden by default */
 }
 
-/* The "show" class is added to the filtered elements */
-.show {
+#dropdownMenuButton {
+    color:black; background-color:#ffc107
+}
+
+#dropdownMenuLink {
+    color:black; background-color:#ffc107
+}
+
+.dropdown-menu {
+    background-color:#f0ad4e
+}
+
+.dropdown-item {
+    background-color:#f0ad4e
+}
+
+/* The "choose" class is added to the filtered elements */
+.choose {
   display: block;
   margin: auto;
   margin-top: 20px;
   padding: 5px;
 }
 
-.show a {
+.choose a {
     text-decoration: none;
+}
+
+.card {
+    width: 18rem;
+}
+
+.card-body {
+    background-color:black
 }
 
 .card-text {
     color: white;
 }
 
-.show a:hover .card-text {
+.choose a:hover .card-text {
     color: #ffc107;
 }
 

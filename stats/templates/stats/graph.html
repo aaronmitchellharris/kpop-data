@@ -27,10 +27,10 @@
 
                 var options = {
                     'title' : 'Total Music Video Views',
-                    'height': 2000,
-                    'width': 1000,
+                    'height': 2200,
+                    'width': 1700,
                     'legend': 'none',
-                    'chartArea': {width:'75%',height:'95%'}
+                    'chartArea': {width:'75%',height:'90%'}
                 };
 
                 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -47,10 +47,10 @@
 
                 var options = {
                     'title' : 'Highest Single Music Video Views',
-                    'height': 2000,
-                    'width': 1000,
+                    'height': 2200,
+                    'width': 1700,
                     'legend': 'none',
-                    'chartArea': {width:'75%',height:'95%'}
+                    'chartArea': {width:'75%',height:'90%'}
                 };
 
                 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -67,10 +67,10 @@
 
                 var options = {
                     'title' : 'Most Recent Music Video Views',
-                    'height': 2000,
-                    'width': 1000,
+                    'height': 2200,
+                    'width': 1700,
                     'legend': 'none',
-                    'chartArea': {width:'75%',height:'95%'}
+                    'chartArea': {width:'75%',height:'90%'}
                 };
 
                 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -87,10 +87,10 @@
 
                 var options = {
                     'title' : 'Top 3 Music Video Views',
-                    'height': 2000,
-                    'width': 1000,
+                    'height': 2200,
+                    'width': 1700,
                     'legend': 'none',
-                    'chartArea': {width:'75%',height:'95%'}
+                    'chartArea': {width:'75%',height:'90%'}
                 };
 
                 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -107,10 +107,10 @@
 
                 var options = {
                     'title' : '3 Most Recent Music Video Views',
-                    'height': 2000,
-                    'width': 1000,
+                    'height': 2200,
+                    'width': 1700,
                     'legend': 'none',
-                    'chartArea': {width:'75%',height:'95%'}
+                    'chartArea': {width:'75%',height:'90%'}
                 };
 
                 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -123,7 +123,7 @@
         <title></title>
     </head>
 
-    <body style="background-color: rgb(186, 186, 186)">
+    <body>
 
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <a href="{% url 'stats:index' %}" class="navbar-brand">Home</a>
@@ -147,10 +147,7 @@
             </div>
         </nav>
 
-        <h1>Graph</h1>
-        <h1>Graph</h1>
-
-        <div class="container-fluid">
+        <div class="container-fluid topButton">
             <div class="row" id="buttons">
                 <div class="col">
                     <h3>Gender</h3>
@@ -174,10 +171,10 @@
             </div>
         </div>
 
-        <div class="jumbotron jumbotron-fluid bg-dark">
+        <!--<div class="jumbotron jumbotron-fluid">
             <div class="container-fluid" id="chart_div" align="center"></div>
-        </div>
-
+        </div>-->
+<div class="container-fluid" id="chart_div" align="center"></div>
         <script>
             if ('{{ gender }}' == 'all') {
                 document.getElementById("All").className += " cactive"

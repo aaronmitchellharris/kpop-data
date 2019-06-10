@@ -10,10 +10,71 @@
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{% static 'stats/profile.css' %}">
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages': ['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = new google.visualization.arrayToDataTable([
+                    ['Upload Date', 'Views'],
+                    {% for v in vid_list %}
+                        [new Date({{ v.upload_date|date:"U" }} * 1000), {{ v.view_count }}],
+                    {% endfor %}
+                ]);
+
+                //var data = new google.visualization.DataTable();
+                //data.addColumn('date', 'Upload Date');
+                //data.addColumn('number', 'Views');
+
+                //data.addRows([
+                    //{% for v in video_list %}
+                    //    [{{ v.upload_date}}, {{ v.view_count }}],
+                    //{% endfor %}
+                    //[new Date(2017, 4, 2), 2009323]
+                //]);
+                //{% for v in video_list %}
+                //    data.addRow([{{ v.upload_date}}, {{ v.view_count }}])
+                //{% endfor %}
+
+                var options = {
+                    'height': 500,
+                    'width': 1000,
+                    'legend': 'none',
+                    backgroundColor: '#E9ECEF',
+                    colors: ['#ffc107'],
+                    hAxis: {
+                        title: 'Date',
+                        gridlines: {
+                            count: -1,
+                            color: 'black',
+                                units: {
+                                    years: {format:'yy'},
+                                }
+                        }
+                    },
+                    vAxis: {
+                        title: 'Views',
+                        minValue: 0,
+                        maxValue: {{maxVid.view_count}},
+                        gridlines: {
+                            count: -1,
+                            color: 'black'
+                        }
+                    },
+                };
+
+
+                var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            };
+
+        </script>
         <title></title>
     </head>
 
-    <body style="background-color: rgb(186, 186, 186)">
+    <body>
 
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <a href="{% url 'stats:index' %}" class="navbar-brand">Home</a>
@@ -24,34 +85,47 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ul class="navbar-nav">
-                    <li class="'nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'stats:about' %}">About</a>
                     </li>
-                    <li class="'nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'stats:groups' %}">Groups</a>
                     </li>
-                    <li class="'nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'stats:graph' 'all' %}">Graphs</a>
                     </li>
                 </ul>
             </div>
         </nav>
 
-        <h1>Profile</h1>
-        <h1>Profile</h1>
+        <h1 class="container centertext" id="name">{{ group }} </h1>
 
-        <h1 class="container centertext">{{ group }} </h1>
+        <!--<img src="{{ group.pic_url }}" class="container centerimage">-->
 
-        <img src="{{ group.pic_url }}" class="container centerimage">
-
-        <div class="centertext">
+        <div class="centertext jumbotron">
             <h3>Company: {{ group.company }}</h3>
             <h3>Debut date: {{ group.debut_date }}</h3>
             <h3>Number of members: {{ group.current_member_count }}</h3>
             <h3>Total MV View Count: {{ group.total_view_count|intcomma }}</h3>
         </div>
 
-        <div class="container">
+
+        <a class="btn btn-dark container holder choose" href="#chart" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+            Chart
+        </a>
+
+        <div class="collapse container" id="chart">
+            <div class="card card-body">
+                <div class="holder" id="chart_div" align="center"></div>
+            </div>
+        </div>
+
+        <a class="btn btn-dark container holder choose" href="#videos" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseOne">
+            Videos
+        </a>
+
+        <div class="container collapse show" id="videos">
+            <div class="card card-body">
             <div class="row">
             {% for v in vid_list %}
                 <div class="col">
@@ -63,6 +137,7 @@
                     <p>Upload Date: {{ v.upload_date }}</p>
                 </div>
             {% endfor %}
+            </div>
             </div>
         </div>
 

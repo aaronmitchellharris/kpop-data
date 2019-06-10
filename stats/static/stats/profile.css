@@ -1,5 +1,9 @@
 .centertext {
-    text-align: center
+    text-align: center;
+}
+
+#name {
+    margin-top: 70px;
 }
 
 .centerimage {
@@ -7,4 +11,36 @@
     margin-left: auto;
     margin-right: auto;
     width: 50%;
+}
+
+.holder {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.choose a {
+    text-decoration: none;
+}
+
+.card-header {
+    color: white;
+}
+
+.choose:hover {
+    color: #ffc107;
+}
+
+.card-body {
+    //background-color: rgb(186, 186, 186);
+    background-color: #E9ECEF;
+    margin-bottom: 10px
+}
+
+.btn {
+    margin-top: 10px
+}
+
+.nav-link:hover {
+    color: #ffc107;
 }
