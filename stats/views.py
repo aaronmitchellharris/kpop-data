@@ -63,7 +63,7 @@ def ProfileView(request, pk, name):
         c=Count('id')).values('month', 'c')
     dV = [[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],[11,0],[12,0]]
     for v in dateVids:
-        dV[v['month']][1] = v['c']
+        dV[v['month']-1][1] = v['c']
     return render(request, 'stats/profile.html', {'group':group, 'vid_list':vid_list, 'maxVid':maxVid,
                                                   'dV':dV})
 
