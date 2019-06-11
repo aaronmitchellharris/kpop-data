@@ -11,6 +11,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{% static 'stats/profile.css' %}">
 
+        <script src="https://kit.fontawesome.com/ecc9da9fa7.js"></script>
+
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
             google.charts.load('current', {'packages': ['corechart']});
@@ -70,6 +72,7 @@
                     'legend': 'none',
                     bar: {groupWidth: "95%"},
                     backgroundColor: '#E9ECEF',
+                    colors: ['#ffc107'],
                     hAxis: {
                         title: 'Month Uploaded',
                         gridlines: {
@@ -126,10 +129,10 @@
         <!--<img src="{{ group.pic_url }}" class="container centerimage">-->
 
         <div class="centertext jumbotron">
-            <h3>Company: {{ group.company }}</h3>
-            <h3>Debut date: {{ group.debut_date }}</h3>
-            <h3>Number of members: {{ group.current_member_count }}</h3>
-            <h3>Total MV View Count: {{ group.total_view_count|intcomma }}</h3>
+            <h3><i class="far fa-building"></i> {{ group.company }}</h3>
+            <h3><i class="far fa-calendar-alt"></i> Debuted {{ group.debut_date }}</h3>
+            <h3><i class="fas fa-users"></i> {{ group.current_member_count }}</h3>
+            <h3><i class="fas fa-eye"></i> {{ group.total_view_count|intcomma }}</h3>
         </div>
 
         <a class="btn btn-dark container holder choose" href="#chart" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
@@ -161,12 +164,14 @@
             <div class="row">
             {% for v in vid_list %}
                 <div class="col">
-                    <iframe width="320" height="180"
+                    <iframe width="336" height="189" class="mv"
                             src="https://www.youtube.com/embed/{{ v.yt_video_id }}">
                     </iframe>
-                    <h5>{{ v.title }}</h5>
-                    <p>Views: {{ v.view_count|intcomma }}</p>
-                    <p>Upload Date: {{ v.upload_date }}</p>
+                    <div class="card card-body cardedit">
+                        <h5>{{ v.title }}</h5>
+                        <p><i class="fas fa-eye"></i> &nbsp;{{ v.view_count|intcomma }}</p>
+                        <p><i class="far fa-calendar-alt"></i> &nbsp;&nbsp;{{ v.upload_date }}</p>
+                    </div>
                 </div>
             {% endfor %}
             </div>

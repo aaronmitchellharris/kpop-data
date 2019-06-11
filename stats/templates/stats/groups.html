@@ -12,7 +12,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'stats/groups.css' %}">
 
        <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
-
+        <script src="https://kit.fontawesome.com/ecc9da9fa7.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
@@ -46,9 +46,9 @@
         <h2 id="FilterBy">Filter by:</h2>
 
         <div class="container-fluid">
-            <div class="row" id="buttons">
+            <div class="row jumbotron" id="buttons">
                 <div class="col">
-                    <h3>Gender</h3>
+                    <h3><i class="fas fa-venus-mars"></i> Gender</h3>
                     <div id="genderBtnContainer">
                         <button class="btn gactive" onclick="filterSelection('anyGender','gender')"> Any</button>
                         <button class="btn" onclick="filterSelection('B','gender')"> Boys</button>
@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="col">
-                <h3>Company</h3>
+                <h3><i class="far fa-building"></i> Company</h3>
                     <div class="dropdown">
                       <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-flip="false" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Any
@@ -72,12 +72,13 @@
                 </div>
 
                 <div class="col">
-                    <h3>Number of Members</h3>
-                    <h5 id="amount"></h5>
+                    <h3><i class="fas fa-users"></i> Members</h3>
                     <div id="slider-range"></div>
+                    <h5 id="amount"></h5>
                 </div>
 
                 <div class="col dropdown">
+                    <h3>&nbsp;</h3>
                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ sort }}
                     </a>
@@ -101,8 +102,8 @@
                          <div class="card bg-dark"">
                              <img src="{{ g.pic_url }}" class="card-img-top" alt="...">
                              <div class="card-body">
-                                 <p class="card-text">{{ g }}</p>
-                                 <p class="card-text">Views: {{ g.total_view_count|intcomma }}</p>
+                                 <h5 class="card-text">{{ g }}</h5>
+                                 <p class="card-text"><i class="far fa-eye"></i> &nbsp;{{ g.total_view_count|intcomma }}</p>
                              </div>
                          </div>
                      </a>

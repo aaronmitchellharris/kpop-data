@@ -44,3 +44,10 @@
 .nav-link:hover {
     color: #ffc107;
 }
+
+.cardedit {
+    width: 21rem;
+    height: 10rem;
+    background: #f0ad4e;
+    margin-top: -7px;
+}

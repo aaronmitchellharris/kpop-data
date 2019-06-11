@@ -27,19 +27,23 @@
 }
 
 #dropdownMenuButton {
-    color:black; background-color:#ffc107
+    color:black;
+    background-color:#ffc107;
 }
 
 #dropdownMenuLink {
-    color:black; background-color:#ffc107
+    color:black;
+    background-color:#ffc107;
+    border: 5px;
+    borderColor: black;
 }
 
 .dropdown-menu {
-    background-color:#f0ad4e
+    background-color:#f0ad4e;
 }
 
 .dropdown-item {
-    background-color:#f0ad4e
+    background-color:#f0ad4e;
 }
 
 /* The "choose" class is added to the filtered elements */
