@@ -33,6 +33,7 @@
                     'legend': 'none',
                     backgroundColor: '#E9ECEF',
                     colors: ['#ffc107'],
+                    trendlines: { 0: {} },
                     'animation': {
                         "startup": true,
                         duration: 1000,
@@ -67,7 +68,7 @@
                 var data = new google.visualization.arrayToDataTable([
                     ['Month', 'Videos'],
                     {% for d in dV %}
-                        [{{ d.0 }}, {{ d.1 }}],
+                        ['{{ d.0 }}', {{ d.1 }}],
                     {% endfor %}
                 ]);
 
@@ -86,12 +87,13 @@
                     hAxis: {
                         title: 'Month Uploaded',
                         gridlines: {
-                            count: 12,
+                            count: -1,
                             color: 'black',
                         },
                         minorGridlines: {
                             count: 0
-                        }
+                        },
+                        textPosition: 'in'
                     },
                     vAxis: {
                         title: '# of Videos',
@@ -102,8 +104,15 @@
                     },
                 };
 
+                var view = new google.visualization.DataView(data);
+                view.setColumns([0, 1,{
+                    calc: "stringify",
+                    sourceColumn: 1,
+                    type: "string",
+                    role: "annotation"}]);
+
                 var chart = new google.visualization.ColumnChart(document.getElementById('graph_div'));
-                chart.draw(data, options);
+                chart.draw(view, options);
             };
 
         </script>

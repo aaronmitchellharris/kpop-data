@@ -52,7 +52,7 @@ def GroupsViewOldest(request):
 def GroupsViewNewest(request):
     object_list = Group.objects.all().order_by('debut_date').reverse()
     sort = "Newest"
-    company_list = Group.objects.order_by('company')#.distinct('company')
+    company_list = Group.objects.order_by('company').distinct('company')
     return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
 def ProfileView(request, pk, name):
@@ -61,7 +61,7 @@ def ProfileView(request, pk, name):
     maxVid = Video.objects.filter(group=pk).order_by('view_count').reverse()[0]
     dateVids = Video.objects.filter(group=pk).annotate(month=ExtractMonth('upload_date')).values('month').annotate(
         c=Count('id')).values('month', 'c')
-    dV = [[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],[11,0],[12,0]]
+    dV = [['Jan',0],['Feb',0],['Mar',0],['Apr',0],['May',0],['Jun',0],['Jul',0],['Aug',0],['Sep',0],['Oct',0],['Nov',0],['Dec',0]]
     for v in dateVids:
         dV[v['month']-1][1] = v['c']
     return render(request, 'stats/profile.html', {'group':group, 'vid_list':vid_list, 'maxVid':maxVid,
