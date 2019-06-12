@@ -46,8 +46,14 @@
 }
 
 .cardedit {
-    width: 21rem;
+    width: 319px;
     height: 10rem;
     background: #f0ad4e;
-    margin-top: -7px;
+    margin-top: -8px;
+}
+
+@media screen and (max-width: 1080px) {
+    .googlecharts {
+        zoom:0.6;
+    }
 }

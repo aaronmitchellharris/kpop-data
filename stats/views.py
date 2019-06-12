@@ -52,7 +52,7 @@ def GroupsViewOldest(request):
 def GroupsViewNewest(request):
     object_list = Group.objects.all().order_by('debut_date').reverse()
     sort = "Newest"
-    company_list = Group.objects.order_by('company').distinct('company')
+    company_list = Group.objects.order_by('company')#.distinct('company')
     return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
 def ProfileView(request, pk, name):
@@ -100,6 +100,16 @@ def GraphView(request, gender):
                     temptop[1] += Video.objects.filter(group=g).order_by('view_count').reverse()[i].view_count
 
                     temprecent[1] += Video.objects.filter(group=g).order_by('upload_date').reverse()[i].view_count
+            elif len(Video.objects.filter(group=g)) >= 2:
+                for i in range(2):
+
+                    temptop[1] += Video.objects.filter(group=g).order_by('view_count').reverse()[i].view_count
+
+                    temprecent[1] += Video.objects.filter(group=g).order_by('upload_date').reverse()[i].view_count
+            elif len(Video.objects.filter(group=g)) == 1:
+                temptop[1] += Video.objects.filter(group=g).order_by('view_count').reverse()[0].view_count
+
+                temprecent[1] += Video.objects.filter(group=g).order_by('upload_date').reverse()[0].view_count
 
             top.append(temptop)
             recent.append(temprecent)

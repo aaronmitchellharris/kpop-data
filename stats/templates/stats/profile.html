@@ -33,6 +33,11 @@
                     'legend': 'none',
                     backgroundColor: '#E9ECEF',
                     colors: ['#ffc107'],
+                    'animation': {
+                        "startup": true,
+                        duration: 1000,
+                        easing: 'out',
+                    },
                     hAxis: {
                         title: 'Date',
                         gridlines: {
@@ -73,6 +78,11 @@
                     bar: {groupWidth: "95%"},
                     backgroundColor: '#E9ECEF',
                     colors: ['#ffc107'],
+                    'animation': {
+                        "startup": true,
+                        duration: 1000,
+                        easing: 'out',
+                    },
                     hAxis: {
                         title: 'Month Uploaded',
                         gridlines: {
@@ -88,7 +98,7 @@
                         gridlines: {
                             count: 2,
                             color: 'black'
-                        }
+                        },
                     },
                 };
 
@@ -135,23 +145,23 @@
             <h3><i class="fas fa-eye"></i> {{ group.total_view_count|intcomma }}</h3>
         </div>
 
-        <a class="btn btn-dark container holder choose" href="#chart" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+        <a class="btn btn-dark container holder choose" onclick="drawChart()" href="#chart" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
             Music Video Views by Date
         </a>
 
-        <div class="collapse container" id="chart">
-            <div class="card card-body">
-                <div class="holder" id="chart_div" align="center"></div>
+        <div class="collapse" id="chart">
+            <div class="container card card-body">
+                <div class="holder googlecharts" id="chart_div" align="center"></div>
             </div>
         </div>
 
-        <a class="btn btn-dark container holder choose" href="#graph" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+        <a class="btn btn-dark container holder choose" onclick="drawChart2()" href="#graph" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
             Number of Music Videos Uploaded by Month
         </a>
 
-        <div class="collapse container" id="graph">
-            <div class="card card-body">
-                <div class="holder" id="graph_div" align="center"></div>
+        <div class="collapse" id="graph">
+            <div class="container card card-body">
+                <div class="holder googlecharts" id="graph_div" align="center"></div>
             </div>
         </div>
 
@@ -159,18 +169,18 @@
             Music Videos
         </a>
 
-        <div class="container collapse show" id="videos">
-            <div class="card card-body">
+        <div class="collapse show" id="videos">
+            <div class="container card card-body">
             <div class="row">
             {% for v in vid_list %}
                 <div class="col">
-                    <iframe width="336" height="189" class="mv"
+                    <iframe width="320" height="180" class="mv"
                             src="https://www.youtube.com/embed/{{ v.yt_video_id }}">
                     </iframe>
                     <div class="card card-body cardedit">
-                        <h5>{{ v.title }}</h5>
-                        <p><i class="fas fa-eye"></i> &nbsp;{{ v.view_count|intcomma }}</p>
-                        <p><i class="far fa-calendar-alt"></i> &nbsp;&nbsp;{{ v.upload_date }}</p>
+                        <h6 class="container">{{ v.title }}</h6>
+                        <p class="container"><i class="fas fa-eye"></i> &nbsp;{{ v.view_count|intcomma }}</p>
+                        <p class="container"><i class="far fa-calendar-alt"></i> &nbsp;&nbsp;{{ v.upload_date }}</p>
                     </div>
                 </div>
             {% endfor %}
