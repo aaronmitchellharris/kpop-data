@@ -99,7 +99,7 @@
             {% for g in object_list %}
                  <div class="col-xs-2 col-xs-offset-5 filterDiv {{ g.gender }} {{ g.company }} {{ g.current_member_count }} anyGender anyCompany anyMemberCount choose">
                      <a href="{% url 'stats:profile' g.pk g.name %}">
-                         <div class="card bg-dark"">
+                         <div class="card bg-dark">
                              <img src="{{ g.pic_url }}" class="card-img-top" alt="...">
                              <div class="card-body">
                                  <h5 class="card-text">{{ g }}</h5>
@@ -111,6 +111,7 @@
             {% endfor %}
             </div>
         </div>
+
 
         <script src="{% static 'stats/groups.js' %}"></script>
 

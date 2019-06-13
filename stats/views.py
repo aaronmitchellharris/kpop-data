@@ -8,9 +8,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models.functions import TruncMonth, ExtractMonth
 from django.db.models import Count
+from datetime import datetime, timedelta
+import operator
 from .models import Group, Video
 from . import vids
 from .forms import VidForm
+
 
 class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 
@@ -32,7 +35,22 @@ def GroupsView(request):
     return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
 def GroupsViewHottest(request):
-    object_list = Group.objects.all().order_by('total_view_count').reverse()
+    start_date = timezone.now()
+    end_date = timezone.now()+timezone.timedelta(days=30)
+    #last_month = datetime.now#-timedelta(days=30)
+    #object_list = Group.objects.filter(my_date__gte=last_month).order_by('total_view_count').reverse()
+    group = Group.objects.all().order_by('total_view_count').reverse()
+    hot = []
+    for i,g in enumerate(group):
+        hot.append([g, 0])
+        if Video.objects.filter(group=g, upload_date__range=(start_date, end_date)).order_by('upload_date').reverse():
+            for v in Video.objects.filter(group=g, upload_date__range=(start_date, end_date)).order_by('upload_date').reverse():
+                hot[i][1] += v.view_count
+
+    hot.sort(key=operator.itemgetter(1), reverse=True)
+    object_list = []
+    for h in hot:
+        object_list.append(h[0])
     sort = "Hottest"
     company_list = Group.objects.order_by('company').distinct('company')
     return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
@@ -96,15 +114,11 @@ def GraphView(request, gender):
 
             if len(Video.objects.filter(group=g)) >= 3:
                 for i in range(3):
-
                     temptop[1] += Video.objects.filter(group=g).order_by('view_count').reverse()[i].view_count
-
                     temprecent[1] += Video.objects.filter(group=g).order_by('upload_date').reverse()[i].view_count
             elif len(Video.objects.filter(group=g)) >= 2:
                 for i in range(2):
-
                     temptop[1] += Video.objects.filter(group=g).order_by('view_count').reverse()[i].view_count
-
                     temprecent[1] += Video.objects.filter(group=g).order_by('upload_date').reverse()[i].view_count
             elif len(Video.objects.filter(group=g)) == 1:
                 temptop[1] += Video.objects.filter(group=g).order_by('view_count').reverse()[0].view_count
