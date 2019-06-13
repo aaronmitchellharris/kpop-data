@@ -35,10 +35,8 @@ def GroupsView(request):
     return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
 def GroupsViewHottest(request):
-    start_date = timezone.now()
-    end_date = timezone.now()+timezone.timedelta(days=30)
-    #last_month = datetime.now#-timedelta(days=30)
-    #object_list = Group.objects.filter(my_date__gte=last_month).order_by('total_view_count').reverse()
+    start_date = timezone.now()-timezone.timedelta(days=90)
+    end_date = timezone.now()
     group = Group.objects.all().order_by('total_view_count').reverse()
     hot = []
     for i,g in enumerate(group):
@@ -46,7 +44,6 @@ def GroupsViewHottest(request):
         if Video.objects.filter(group=g, upload_date__range=(start_date, end_date)).order_by('upload_date').reverse():
             for v in Video.objects.filter(group=g, upload_date__range=(start_date, end_date)).order_by('upload_date').reverse():
                 hot[i][1] += v.view_count
-
     hot.sort(key=operator.itemgetter(1), reverse=True)
     object_list = []
     for h in hot:
