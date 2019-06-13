@@ -4,7 +4,7 @@ from . import views
 
 app_name = 'stats'
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
+    path('', views.IndexView, name='index'),
     path('about/', views.AboutView.as_view(), name='about'),
     path('categories/', views.CategoriesView.as_view(), name='categories'),
     path('groups/', views.GroupsView, name='groups'),

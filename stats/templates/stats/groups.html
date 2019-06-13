@@ -22,7 +22,7 @@
     <body>
 
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-            <a href="{% url 'stats:index' %}" class="navbar-brand">Home</a>
+            <a href="{% url 'stats:index' %}" class="navbar-brand">Kpop-Numbers</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -43,10 +43,8 @@
             </div>
         </nav>
 
-        <h2 id="FilterBy">Filter by:</h2>
-
-        <div class="container-fluid">
-            <div class="row jumbotron" id="buttons">
+        <div id="FilterBy" class="container-fluid jumbotron">
+            <div class="row" id="buttons">
                 <div class="col">
                     <h3><i class="fas fa-venus-mars"></i> Gender</h3>
                     <div id="genderBtnContainer">
@@ -80,19 +78,33 @@
                 <div class="col dropdown">
                     <h3>&nbsp;</h3>
                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% if sort == "Most Viewed"%}
+                        <i class="far fa-eye"></i>
+                        {% elif sort == "Hottest" %}
+                            <i class="fab fa-hotjar"></i>
+                        {% elif sort == "Alphabetical" %}
+                            <i class="fas fa-sort-alpha-down"></i>
+                        {% elif sort == "Oldest" %}
+                            <i class="fas fa-hourglass-end"></i>
+                        {% elif sort == "Newest" %}
+                            <i class="fas fa-baby"></i>
+                        {% endif %}
                         {{ sort }}
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="{% url 'stats:groups' %}">Most Viewed</a>
-                        <a class="dropdown-item" href="{% url 'stats:hottest' %}">Hottest</a>
-                        <a class="dropdown-item" href="{% url 'stats:alphabetical' %}">Alphabetical</a>
-                        <a class="dropdown-item" href="{% url 'stats:oldest' %}">Oldest</a>
-                        <a class="dropdown-item" href="{% url 'stats:newest' %}">Newest</a>
+                        <a class="dropdown-item" href="{% url 'stats:groups' %}"><i class="far fa-eye"></i> Most Viewed</a>
+                        <a class="dropdown-item" href="{% url 'stats:hottest' %}"><i class="fab fa-hotjar"></i> Hottest</a>
+                        <a class="dropdown-item" href="{% url 'stats:alphabetical' %}"><i class="fas fa-sort-alpha-down"></i> Alphabetical</a>
+                        <a class="dropdown-item" href="{% url 'stats:oldest' %}"><i class="fas fa-hourglass-end"></i> Oldest</a>
+                        <a class="dropdown-item" href="{% url 'stats:newest' %}"><i class="fas fa-baby"></i> Newest</a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <h5 id="display">Showing <span id="counting">displaying</span> artists:</h5>
+
 
         <div class="container-fluid">
             <div class="row" id="groups">
@@ -101,9 +113,9 @@
                      <a href="{% url 'stats:profile' g.pk g.name %}">
                          <div class="card bg-dark">
                              <img src="{{ g.pic_url }}" class="card-img-top" alt="...">
-                             <div class="card-body">
-                                 <h5 class="card-text">{{ g }}</h5>
-                                 <p class="card-text"><i class="far fa-eye"></i> &nbsp;{{ g.total_view_count|intcomma }}</p>
+                             <div class="card-img-overlay">
+                                 <h5 class="groupname card-text">{{ g }}</h5>
+                                 <p class="viewcount card-text"><i class="far fa-eye"></i> &nbsp;{{ g.total_view_count|intcomma }}</p>
                              </div>
                          </div>
                      </a>
@@ -111,6 +123,72 @@
             {% endfor %}
             </div>
         </div>
+
+         <!-- Footer -->
+        <footer class="page-footer font-small blue pt-4">
+          <!-- Footer Links -->
+          <div class="container-fluid text-center text-md-left">
+            <!-- Grid row -->
+            <div class="row">
+              <!-- Grid column -->
+              <div class="col-md-6 mt-md-0 mt-3">
+                <!-- Content -->
+                <h5 class="text-uppercase">Contact</h5>
+                <p>aaronmitchellharris@gmail.com</p>
+              </div>
+              <!-- Grid column -->
+              <hr class="clearfix w-100 d-md-none pb-3">
+              <!-- Grid column -->
+              <div class="col-md-3 mb-md-0 mb-3">
+                <!-- Links
+                <h5 class="text-uppercase">Links</h5>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#!">Link 1</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 2</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 3</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 4</a>
+                  </li>
+                </ul> -->
+              </div>
+              <!-- Grid column -->
+              <!-- Grid column -->
+              <div class="col-md-3 mb-md-0 mb-3">
+                <!-- Links
+                <h5 class="text-uppercase">Links</h5>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#!">Link 1</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 2</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 3</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 4</a>
+                  </li>
+                </ul>-->
+              </div>
+              <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+          </div>
+          <!-- Footer Links -->
+          <!-- Copyright -->
+          <div class="footer-copyright text-center py-3">
+            <a href="https://mdbootstrap.com/education/bootstrap/"></a>
+          </div>
+          <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
 
         <script src="{% static 'stats/groups.js' %}"></script>
 

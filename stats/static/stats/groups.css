@@ -1,3 +1,24 @@
+footer {
+    background-color: #e9ecef;
+    margin-top: 100px;
+}
+
+.card-img-overlay {
+    padding-top: 1px
+}
+
+.groupname {
+
+}
+
+.viewcount {
+    margin-top: 165px;
+}
+
+#display {
+    margin-left: 17px;
+}
+
 .row {
     margin-right: 0px
     margin-left: 0px
@@ -5,7 +26,7 @@
 
 #FilterBy {
     text-align: center;
-    margin-top: 70px;
+    margin-top: 90px;
 }
 
 #groups {
@@ -15,8 +36,6 @@
 #buttons {
     text-align: center;
 }
-
-
 
 .container {
   overflow: hidden;

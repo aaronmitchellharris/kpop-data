@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{% static 'stats/graph.css' %}">
 
-
+        <script src="https://kit.fontawesome.com/ecc9da9fa7.js"></script>
 
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
@@ -167,7 +167,7 @@
     <body>
 
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-            <a href="{% url 'stats:index' %}" class="navbar-brand">Home</a>
+            <a href="{% url 'stats:index' %}" class="navbar-brand">Kpop-Numbers</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -189,10 +189,10 @@
         </nav>
 
 
-        <div class="container-fluid topButton">
+        <div class="container jumbotron topButton">
             <div class="row" id="buttons">
                 <div class="col">
-                    <h3>Gender</h3>
+                    <h3><i class="fas fa-venus-mars"></i> Gender</h3>
                     <div id="genderBtnContainer">
                         <a class="btn" id="All" href="{% url 'stats:graph' 'all' %}">All</a>
                         <a class="btn" id="Boys" href="{% url 'stats:graph' 'B' %}">Boys</a>
@@ -201,7 +201,7 @@
                 </div>
 
                 <div class="col">
-                    <h3>Filter</h3>
+                    <h3><i class="fas fa-filter"></i> Filter</h3>
                     <div id="filterBtnContainer">
                         <button class="btn gactive" id="default" onclick="drawChart()">All</button>
                         <button class="btn" id="best" onclick="drawChartBest()">Best</button>
@@ -220,6 +220,72 @@
             <div class="googlecharts" id="chart_div" align="center">
             </div>
         </div>
+
+         <!-- Footer -->
+        <footer class="page-footer font-small blue pt-4">
+          <!-- Footer Links -->
+          <div class="container-fluid text-center text-md-left">
+            <!-- Grid row -->
+            <div class="row">
+              <!-- Grid column -->
+              <div class="col-md-6 mt-md-0 mt-3">
+                <!-- Content -->
+                <h5 class="text-uppercase">Contact</h5>
+                <p>aaronmitchellharris@gmail.com</p>
+              </div>
+              <!-- Grid column -->
+              <hr class="clearfix w-100 d-md-none pb-3">
+              <!-- Grid column -->
+              <div class="col-md-3 mb-md-0 mb-3">
+                <!-- Links
+                <h5 class="text-uppercase">Links</h5>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#!">Link 1</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 2</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 3</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 4</a>
+                  </li>
+                </ul> -->
+              </div>
+              <!-- Grid column -->
+              <!-- Grid column -->
+              <div class="col-md-3 mb-md-0 mb-3">
+                <!-- Links
+                <h5 class="text-uppercase">Links</h5>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#!">Link 1</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 2</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 3</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 4</a>
+                  </li>
+                </ul>-->
+              </div>
+              <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+          </div>
+          <!-- Footer Links -->
+          <!-- Copyright -->
+          <div class="footer-copyright text-center py-3">
+            <a href="https://mdbootstrap.com/education/bootstrap/"></a>
+          </div>
+          <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
 
         <script>
             if ('{{ gender }}' == 'all') {

@@ -122,7 +122,7 @@
     <body>
 
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-            <a href="{% url 'stats:index' %}" class="navbar-brand">Home</a>
+            <a href="{% url 'stats:index' %}" class="navbar-brand">Kpop-Numbers</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -147,7 +147,7 @@
 
         <!--<img src="{{ group.pic_url }}" class="container centerimage">-->
 
-        <div class="centertext jumbotron">
+        <div class="centertext container jumbotron">
             <h3><i class="far fa-building"></i> {{ group.company }}</h3>
             <h3><i class="far fa-calendar-alt"></i> Debuted {{ group.debut_date }}</h3>
             <h3><i class="fas fa-users"></i> {{ group.current_member_count }}</h3>
@@ -196,6 +196,72 @@
             </div>
             </div>
         </div>
+
+         <!-- Footer -->
+        <footer class="page-footer font-small blue pt-4">
+          <!-- Footer Links -->
+          <div class="container-fluid text-center text-md-left">
+            <!-- Grid row -->
+            <div class="row">
+              <!-- Grid column -->
+              <div class="col-md-6 mt-md-0 mt-3">
+                <!-- Content -->
+                <h5 class="text-uppercase">Contact</h5>
+                <p>aaronmitchellharris@gmail.com</p>
+              </div>
+              <!-- Grid column -->
+              <hr class="clearfix w-100 d-md-none pb-3">
+              <!-- Grid column -->
+              <div class="col-md-3 mb-md-0 mb-3">
+                <!-- Links
+                <h5 class="text-uppercase">Links</h5>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#!">Link 1</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 2</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 3</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 4</a>
+                  </li>
+                </ul> -->
+              </div>
+              <!-- Grid column -->
+              <!-- Grid column -->
+              <div class="col-md-3 mb-md-0 mb-3">
+                <!-- Links
+                <h5 class="text-uppercase">Links</h5>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#!">Link 1</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 2</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 3</a>
+                  </li>
+                  <li>
+                    <a href="#!">Link 4</a>
+                  </li>
+                </ul>-->
+              </div>
+              <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+          </div>
+          <!-- Footer Links -->
+          <!-- Copyright -->
+          <div class="footer-copyright text-center py-3">
+            <a href="https://mdbootstrap.com/education/bootstrap/"></a>
+          </div>
+          <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

@@ -47,6 +47,7 @@ function countAdjust(number, direction) {
             }
         }
     }
+    countArtist();
 }
 
 var filters;
@@ -89,6 +90,7 @@ function filterSelection(c, select) {
         w3AddClass(objects[i], "choose");
     }
   }
+  countArtist();
 }
 
 // choose filtered elements
@@ -147,3 +149,8 @@ function formatCompany(c) {
     }
     return hold[0]
 }
+
+function countArtist() {
+    $('#counting').html($('.choose').length)
+}
+countArtist();

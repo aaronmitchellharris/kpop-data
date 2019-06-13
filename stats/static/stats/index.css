@@ -5,3 +5,24 @@
     /*Without this, clicking will make it sticky*/
     pointer-events: none;
 }
+
+.carousel-inner > .carousel-item {
+  /*min-height : 100px;
+  max-height : 500px;*/
+  height: 700px;
+  width : 100%;
+}
+
+.carousel {
+    /*margin-top: 70px;*/
+    width: 100%;
+}
+
+.carousel-caption > h5 {
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+}
+
+footer {
+    background-color: #e9ecef;
+    margin-top: 100px;
+}
