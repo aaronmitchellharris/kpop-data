@@ -9,7 +9,6 @@
 .carousel-inner > .carousel-item {
   /*min-height : 100px;
   max-height : 500px;*/
-  height: 700px;
   width : 100%;
 }
 
@@ -25,4 +24,16 @@
 footer {
     background-color: #e9ecef;
     margin-top: 100px;
+}
+
+@media screen and (max-width: 1080px) {
+    .carousel-inner > .carousel-item {
+        height: 400px;
+    }
+}
+
+@media screen and (min-width: 1080px) {
+    .carousel-inner > .carousel-item {
+        height: 700px;
+    }
 }
