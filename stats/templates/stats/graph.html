@@ -41,6 +41,9 @@
                         duration: 1000,
                         easing: 'out',
                     },
+                    hAxis: {
+                        format: 'short',
+                    },
                     'chartArea': {width:'75%',height:'90%'}
                 };
 
@@ -116,6 +119,12 @@
                         function() {
                             recentButton.disabled = false;
                         });
+
+                    var formatter = new google.visualization.NumberFormat({
+                        pattern: 'short'
+                    });
+                    formatter.format(data[current], 1);
+                    formatter.format(data[current], 2);
 
                     var view = new google.visualization.DataView(data[current]);
                     view.setColumns([0, 1,{

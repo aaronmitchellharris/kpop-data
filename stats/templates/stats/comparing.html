@@ -46,6 +46,11 @@
                     },
                     hAxis: {
                         title: 'Included Music Video',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
                         gridlines: {
                             count: -1,
                             color: 'black',
@@ -56,12 +61,24 @@
                     },
                     vAxis: {
                         title: 'Views',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        format:'short',
                         gridlines: {
                             count: 2,
                             color: 'black'
                         },
                     },
                 };
+
+                 var formatter = new google.visualization.NumberFormat({
+                    pattern: 'short'
+                 });
+                 formatter.format(data, 1);
+                 formatter.format(data, 2);
 
                 var view = new google.visualization.DataView(data);
                 view.setColumns([0, 1,{
@@ -102,6 +119,11 @@
                     },
                     hAxis: {
                         title: 'Month Uploaded',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
                         gridlines: {
                             count: -1,
                             color: 'black',
@@ -111,7 +133,12 @@
                         },
                     },
                     vAxis: {
-                        title: '# of Views',
+                        title: 'Views',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
                         gridlines: {
                             count: 2,
                             color: 'black'
@@ -157,7 +184,12 @@
                         easing: 'out',
                     },
                     hAxis: {
-                        title: 'Month Uploaded',
+                        title: 'Year Uploaded',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
                         gridlines: {
                             count: -1,
                             color: 'black',
@@ -167,13 +199,25 @@
                         },
                     },
                     vAxis: {
-                        title: '# of Views',
+                        title: 'Views',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        format: 'short',
                         gridlines: {
                             count: 2,
                             color: 'black'
                         },
                     },
                 };
+
+                var formatter = new google.visualization.NumberFormat({
+                    pattern: 'short'
+                });
+                formatter.format(data, 1);
+                formatter.format(data, 2);
 
                 var view = new google.visualization.DataView(data);
                 view.setColumns([0, 1,{
