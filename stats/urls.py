@@ -17,4 +17,10 @@ urlpatterns = [
     path('addvideos/<int:pk>/<str:name>', views.GroupEdit, name='groupedit'),
     #path('delete/', views.deleteVids, name='deletevids'),
     path('graph/<str:gender>', views.GraphView, name='graph'),
+    path('compare/<int:pk>/<str:name>', views.CompareView, name='compare'),
+    path('compare/hottest/<int:pk>/<str:name>', views.CompareViewHottest, name='comparehottest'),
+    path('compare/alphabetical/<int:pk>/<str:name>', views.CompareViewAlpha, name='comparealphabetical'),
+    path('compare/oldest/<int:pk>/<str:name>', views.CompareViewOldest, name='compareoldest'),
+    path('compare/newest/<int:pk>/<str:name>', views.CompareViewNewest, name='comparenewest'),
+    path('comparing/<int:pk>/<int:pk2>', views.ComparingView, name='comparing'),
 ]

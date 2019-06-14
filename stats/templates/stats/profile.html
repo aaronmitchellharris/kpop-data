@@ -142,15 +142,19 @@
             </div>
         </nav>
 
-        <h1 class="container centertext" id="name">{{ group }} </h1>
+        <h1 class="centertext" id="name">{{ group }}</h1>
 
         <!--<img src="{{ group.pic_url }}" class="container centerimage">-->
 
-        <div class="centertext container jumbotron">
+        <div class="centertext container-fluid jumbotron">
             <h3><i class="far fa-building"></i> {{ group.company }}</h3>
             <h3><i class="far fa-calendar-alt"></i> Debuted {{ group.debut_date }}</h3>
             <h3><i class="fas fa-users"></i> {{ group.current_member_count }}</h3>
             <h3><i class="fas fa-eye"></i> {{ group.total_view_count|intcomma }}</h3>
+        </div>
+
+        <div align="center">
+            <a class="btn" id="comparebutton" href="{% url 'stats:compare' group.pk group %}">Compare this group</a>
         </div>
 
         <a class="btn btn-dark container-fluid holder choose" href="#chart" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
@@ -163,7 +167,7 @@
             </div>
         </div>
 
-        <a class="btn btn-dark container-fluid holder choose" onclick="drawChart2()" href="#graph" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+        <a class="btn btn-dark container-fluid holder choose" href="#graph" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
             Number of Music Videos Uploaded by Month
         </a>
 
@@ -186,9 +190,9 @@
                             src="https://www.youtube.com/embed/{{ v.yt_video_id }}">
                     </iframe>
                     <div class="card card-body cardedit">
-                        <h6 class="container">{{ v.title }}</h6>
-                        <p class="container"><i class="fas fa-eye"></i> &nbsp;{{ v.view_count|intcomma }}</p>
-                        <p class="container"><i class="far fa-calendar-alt"></i> &nbsp;&nbsp;{{ v.upload_date }}</p>
+                        <h6 class="container" align="left">{{ v.title }}</h6>
+                        <p class="container" align="left"><i class="fas fa-eye"></i> &nbsp;{{ v.view_count|intcomma }}</p>
+                        <p class="container" align="left"><i class="far fa-calendar-alt"></i> &nbsp;&nbsp;{{ v.upload_date }}</p>
                     </div>
                 </div>
             {% endfor %}

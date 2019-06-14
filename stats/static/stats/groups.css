@@ -65,6 +65,10 @@ footer {
     background-color:#f0ad4e;
 }
 
+.dropdown-item:hover {
+    background-color: #ffc107;
+}
+
 /* The "choose" class is added to the filtered elements */
 .choose {
   display: block;
@@ -97,7 +101,7 @@ footer {
 
 /* Add a light grey background on mouse-over */
 .btn:hover {
-  background-color: #ddd;
+  background-color: #ffc107;
 }
 
 .btn {
