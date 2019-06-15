@@ -154,3 +154,5 @@ function countArtist() {
     $('#counting').html($('.choose').length)
 }
 countArtist();
+
+

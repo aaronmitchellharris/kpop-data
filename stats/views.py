@@ -23,6 +23,13 @@ class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 def IndexView(request):
     object_list = Group.objects.all()
     bp = Group.objects.filter(pk='1')
+
+    #if request.method == 'GET':
+    #    search_query = request.GET.get('search_box', None)
+
+    if 'search' in request.GET:
+        search_term = request.GET['search']
+
     return render(request, 'stats/index.html', {"object_list": object_list, "bp":bp})
 
 class AboutView(generic.ListView):
@@ -99,7 +106,16 @@ def GroupsView(request):
     object_list = Group.objects.all().order_by('total_view_count').reverse()
     sort = "Most Viewed"
     company_list = Group.objects.order_by('company').distinct('company')
-    return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
+
+    search_term = ''
+
+    if 'search' in request.GET:
+        search_term = request.GET['search']
+        object_list = Group.objects.filter(name__icontains=search_term)
+        ol2 = Group.objects.filter(company__icontains=search_term)
+        object_list = object_list.union(ol2).order_by('total_view_count').reverse()
+
+    return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list, "search_term": search_term})
 
 def CompareViewHottest(request, pk, name):
     start_date = timezone.now()-timezone.timedelta(days=90)

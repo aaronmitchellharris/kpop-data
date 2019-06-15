@@ -41,6 +41,10 @@
                     </li>
                 </ul>
             </div>
+            <form action="/groups/" class="form-inline my-2 my-lg-0">
+                <input id="search_box" name="search" class="form-control mr-sm-2" type="search" placeholder="Search for artist" aria-label="Search">
+                <button id="search_submit" class="btn btn-outline-warning my-2 my-sm-0" type="search">Search</button>
+            </form>
         </nav>
 
         <div id="FilterBy" class="container-fluid jumbotron">
@@ -60,12 +64,12 @@
                       <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-flip="false" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Any
                       </button>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <button class="dropdown-item" type="button" onclick="filterSelection('anyCompany','company')"> Any</button>
+                      <ul class="dropdown-menu scrollable-menu" id="companydrop" aria-labelledby="dropdownMenuButton">
+                          <li><button class="dropdown-item" type="button" onclick="filterSelection('anyCompany','company')"> Any</button></li>
                           {% for c in company_list %}
-                              <button class="dropdown-item" type="button" onclick="filterSelection('{{ c.company }}','company')"> {{ c.company }}</button>
+                              <li><button class="dropdown-item dropdownCompany" type="button" onclick="filterSelection('{{ c.company }}','company')"> {{ c.company }}</button></li>
                           {% endfor %}
-                      </div>
+                      </ul>
                     </div>
                 </div>
 
@@ -103,7 +107,7 @@
             </div>
         </div>
 
-        <h5 id="display">Showing <span id="counting">displaying</span> artists:</h5>
+        <h5 id="display">Showing <span id="counting"></span> artists:</h5>
 
 
         <div class="container-fluid">

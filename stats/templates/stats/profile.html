@@ -161,6 +161,10 @@
                     </li>
                 </ul>
             </div>
+            <form action="/groups/" class="form-inline my-2 my-lg-0">
+                <input id="search_box" name="search" class="form-control mr-sm-2" type="search" placeholder="Search for artist" aria-label="Search">
+                <button id="search_submit" class="btn btn-outline-warning my-2 my-sm-0" type="search">Search</button>
+            </form>
         </nav>
 
         <h1 class="centertext" id="name">{{ group }}</h1>
@@ -208,7 +212,7 @@
             {% for v in vid_list %}
                 <div class="col">
                     <iframe width="320" height="180" class="mv"
-                            src="https://www.youtube.com/embed/{{ v.yt_video_id }}">
+                            src="https://www.youtube.com/embed/{{ v.yt_video_id }}" allowfullscreen>
                     </iframe>
                     <div class="card card-body cardedit">
                         <h6 class="container" align="left">{{ v.title }}</h6>

@@ -1,3 +1,9 @@
+.scrollable-menu {
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
+}
+
 footer {
     background-color: #e9ecef;
     margin-top: 100px;
@@ -100,20 +106,20 @@ footer {
 /* Style the buttons */
 
 /* Add a light grey background on mouse-over */
-.btn:hover {
+#FilterBy .btn:hover {
   background-color: #ffc107;
 }
 
-.btn {
+.col .btn {
     background: #f0ad4e;
 }
 
 /* Add a dark background to the active button */
-.btn.gactive {
+#FilterBy .btn.gactive {
   background-color: #ffc107;
 }
 
-.btn.cactive {
+#FilterBy .btn.cactive {
   background-color: #ffc107;
 }
 

@@ -1,3 +1,9 @@
+.scrollable-menu {
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
+}
+
 #comparewith {
     margin-top:70px;
 }
@@ -69,6 +75,10 @@ footer {
     background-color:#f0ad4e;
 }
 
+.dropdown-item:hover {
+    background-color: #ffc107;
+}
+
 /* The "choose" class is added to the filtered elements */
 .choose {
   display: block;
@@ -100,11 +110,11 @@ footer {
 /* Style the buttons */
 
 /* Add a light grey background on mouse-over */
-.btn:hover {
-  background-color: #ddd;
+.col .btn:hover {
+  background-color: #ffc107;
 }
 
-.btn {
+.col .btn {
     background: #f0ad4e;
 }
 
