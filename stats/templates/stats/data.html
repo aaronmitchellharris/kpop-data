@@ -19,6 +19,8 @@
             google.charts.setOnLoadCallback(drawChart2);
             google.charts.setOnLoadCallback(drawChart3);
             google.charts.setOnLoadCallback(drawChart4);
+            google.charts.setOnLoadCallback(drawChart5);
+            google.charts.setOnLoadCallback(drawChart6);
 
             function drawChart() {
 
@@ -144,6 +146,118 @@
             }
             drawChart4();
 
+            function drawChart5() {
+
+                var data = new google.visualization.arrayToDataTable([
+
+                    ['Company', 'Groups'],
+                    {% for c in company %}
+                        ['{{ c.company }}', {{ c.c }}],
+                    {% endfor %}
+
+                ]);
+
+                var options = {
+                    backgroundColor: '#E9ECEF',
+                    legend: {
+                        position: 'bottom',
+                        alignment: 'center',
+                    },
+                    width: '100%',
+                    height: '350',
+                    chartArea: {
+                        height: '300',
+                        width: '100%',
+                        left: 5,
+                        right: 0,
+                    },
+                    /*chartArea: {
+                        height: '80%',
+                        width: '100%',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                    },*/
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div5'));
+                chart.draw(data, options);
+
+            }
+            drawChart5();
+
+            function drawChart6() {
+
+                var data = new google.visualization.arrayToDataTable([
+
+                    ['Upload Date', 'Views'],
+                    {% for v in videos %}
+                        [new Date({{ v.upload_date|date:"U" }} * 1000), {{ v.view_count }}],
+                    {% endfor %}
+
+                ]);
+
+                var options = {
+                    backgroundColor: '#E9ECEF',
+                    legend: {
+                        position: 'none',
+                        alignment: 'center',
+                    },
+                    width: '100%',
+                    height: '500',
+                    chartArea: {
+                        height: '150',
+                        width: '100%',
+                        left: 75,
+                        right: 20,
+                        top: 40,
+                        bottom: 40
+                    },
+                    hAxis: {
+                        title: 'Date',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        gridlines: {
+                            count: -1,
+                            color: 'black',
+                        },
+                        minorGridlines: {
+                            count: 0
+                        }
+                    },
+                    vAxis: {
+                        title: 'Views',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        format: 'short',
+                        minValue: 0,
+                        //maxValue: {{maxVid.view_count}},
+                        gridlines: {
+                            count: 2,
+                            color: 'black'
+                        }
+                    },
+                    /*chartArea: {
+                        height: '80%',
+                        width: '100%',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                    },*/
+                };
+
+                var chart = new google.visualization.ScatterChart(document.getElementById('chart_div6'));
+                chart.draw(data, options);
+
+            }
+            drawChart6();
+
         </script>
         <title></title>
     </head>
@@ -180,10 +294,10 @@
         <div class="container-fluid jumbotron topButton">
         </div>
 
-        {% for g in genderCount %}
-            <p>{{ g }}</p>
+        <!--{% for c in company %}
+            <p>{{ c }}</p>
         {% endfor %}
-        <!--<div class="jumbotron jumbotron-fluid">
+        <div class="jumbotron jumbotron-fluid">
             <div class="container-fluid" id="chart_div" align="center"></div>
         </div>-->
 
@@ -201,7 +315,7 @@
                             </a>
                             <div class="collapse show" id="chart3">
                                 <div class="container-fluid card card-body">
-                                    <div class="holder googlecharts" id="chart_div3" align="center"></div>
+                                    <div class="holder googlecharts zoom" id="chart_div3" align="center"></div>
                                 </div>
                             </div>
                         </div>
@@ -211,17 +325,46 @@
                             </a>
                             <div class="collapse show" id="chart4">
                                 <div class="container-fluid card card-body">
-                                    <div class="holder googlecharts" id="chart_div4" align="center"></div>
+                                    <div class="holder googlecharts zoom" id="chart_div4" align="center"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose below" href="#chart5" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                Groups by Company
+                            </a>
+                            <div class="collapse show" id="chart5">
+                                <div class="container-fluid card card-body">
+                                    <div class="holder googlecharts zoom" id="chart_div5" align="center"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="container jumbotron">
-            <div class="googlecharts" id="chart_div2" align="center">
+                <div class="col-7">
+                    <a class="btn btn-dark container-fluid holder choose below" href="#chart6" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                        Views Scatter Plot
+                    </a>
+                    <div class="collapse show" id="chart6">
+                        <div class="container-fluid card card-body">
+                            <div class="googlecharts zoom" id="chart_div6"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="googlecharts" id="chart_div2" align="center">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <a class="btn btn-dark container-fluid holder choose below" href="#chart7" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                        TBD
+                    </a>
+                    <div class="collapse show" id="chart7">
+                        <div class="container-fluid card card-body">
+                            <div class="holder googlecharts" id="chart_div7"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

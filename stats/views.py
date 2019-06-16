@@ -168,7 +168,8 @@ def CompareViewOldest(request, pk, name):
     object_list = Group.objects.exclude(pk=pk).order_by('debut_date')
     sort = "Oldest"
     company_list = Group.objects.exclude(pk=pk).order_by('company').distinct('company')
-    return render(request, 'stats/compare.html',{"name": name, "opk": pk, "object_list": object_list, "sort": sort, "company_list": company_list})
+    return render(request, 'stats/compare.html', {"name": name, "opk": pk, "object_list": object_list, "sort": sort,
+                                                  "company_list": company_list})
 
 def GroupsViewOldest(request):
     object_list = Group.objects.all().order_by('debut_date')
@@ -180,7 +181,8 @@ def CompareViewNewest(request, pk, name):
     object_list = Group.objects.exclude(pk=pk).order_by('debut_date').reverse()
     sort = "Newest"
     company_list = Group.objects.exclude(pk=pk).order_by('company').distinct('company')
-    return render(request, 'stats/compare.html',{"name": name, "opk": pk, "object_list": object_list, "sort": sort, "company_list": company_list})
+    return render(request, 'stats/compare.html', {"name": name, "opk": pk, "object_list": object_list, "sort": sort,
+                                                  "company_list": company_list})
 
 def GroupsViewNewest(request):
     object_list = Group.objects.all().order_by('debut_date').reverse()
@@ -215,11 +217,13 @@ def DataView(request):
     group = Group.objects.all()
     gender = group.values('gender').annotate(Views=Sum('total_view_count')).values('gender', 'Views')
     genderCount = group.values('gender').annotate(c=Count('gender')).values('gender', 'c')
-    company = group.values('company').annotate(Views=Sum('total_view_count'), Vids=Sum('video_count'))\
-        .values('company', 'Views', 'Vids')
+    videos = Video.objects.all()
+
+    company = group.values('company').annotate(Views=Sum('total_view_count'), Vids=Sum('video_count'),
+                                               c=Count('company')).values('company', 'Views', 'Vids', 'c')
 
     return render(request, 'stats/data.html', {"group": group, "company": company, "gender": gender,
-                                               "genderCount": genderCount})
+                                               "genderCount": genderCount, "videos": videos})
 
 def GraphView(request, gender):
 
@@ -265,7 +269,8 @@ class AddVideos(AdminStaffRequiredMixin, generic.ListView):
 #@staff_member_required
 def GroupEdit(request, pk, name):
     group = Group.objects.get(pk=pk)
-    VidFormSet = inlineformset_factory(Group, Video, fields=('group','title','upload_date','yt_video_id','thumbnail_url'), extra=50)
+    VidFormSet = inlineformset_factory(Group, Video, fields=('group', 'title', 'upload_date', 'yt_video_id',
+                                                             'thumbnail_url'), extra=50)
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:

@@ -14,6 +14,7 @@ footer {
     border-radius: 5px 5px 0px 0px;
 }
 
+
 .collapsed {
     border-radius: 5px 5px 5px 5px;
 }
@@ -39,9 +40,9 @@ footer {
 
 
 
-.chart {
+/*.chart {
     width: 100%;
-}
+}*/
 
 .below {
     margin-top: 20px;
@@ -55,91 +56,183 @@ footer {
 
 */
 @media screen and (min-width: 480px) and (max-width: 579px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: .4;
     }
 }
 
 @media screen and (min-width: 580px) and (max-width: 679px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: .5;
     }
 }
 
 @media screen and (min-width: 680px) and (max-width: 779px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: .6;
     }
 }
 
 @media screen and (min-width: 780px) and (max-width: 879px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: .7;
     }
 }
 
 @media screen and (min-width: 880px) and (max-width: 1009px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: .8;
     }
 }
 
 @media screen and (min-width: 1010px) and (max-width: 1089px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: .9;
     }
 }
 
 @media screen and (min-width: 1090px) and (max-width: 1179px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: 1;
     }
 }
 
 @media screen and (min-width: 1180px) and (max-width: 1279px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: 1.1;
     }
 }
 
 @media screen and (min-width: 1280px) and (max-width: 1379px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: 1.2;
     }
 }
 
 @media screen and (min-width: 1380px) and (max-width: 1479px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: 1.3;
     }
 }
 
 @media screen and (min-width: 1480px) and (max-width: 1579px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: 1.4;
     }
 }
 
 @media screen and (min-width: 1580px) and (max-width: 1669px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: 1.5;
     }
 }
 
 @media screen and (min-width: 1670px) and (max-width: 1749px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: 1.6;
     }
 }
 
 @media screen and (min-width: 1750px) and (max-width: 1919px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: 1.7;
     }
 }
 
 @media screen and (min-width: 1920px) {
-    .card .googlecharts {
+    .card .zoom {
         zoom: 1.8;
     }
 }
+
+
+/*
+@media screen and (min-width: 480px) and (max-width: 579px) {
+    .card .scatter {
+        width: 300px;
+    }
+}
+
+@media screen and (min-width: 580px) and (max-width: 679px) {
+    .card .scatter {
+        width: 350px;
+    }
+}
+
+@media screen and (min-width: 680px) and (max-width: 779px) {
+    .card .scatter {
+        width: 400px;
+    }
+}
+
+@media screen and (min-width: 780px) and (max-width: 879px) {
+    .card .scatter {
+        width: 450px;
+    }
+}
+
+@media screen and (min-width: 880px) and (max-width: 1009px) {
+    .card .scatter {
+        width: 500px;
+    }
+}
+
+@media screen and (min-width: 1010px) and (max-width: 1089px) {
+    .card .scatter {
+        width: 550px;
+    }
+}
+
+@media screen and (min-width: 1090px) and (max-width: 1219px) {
+    .card .scatter {
+        width: 600px;
+    }
+}
+
+@media screen and (min-width: 1220px) and (max-width: 1299px) {
+    .card .scatter {
+        width: 650px;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1379px) {
+    .card .scatter {
+        width: 700px;
+    }
+}
+
+@media screen and (min-width: 1380px) and (max-width: 1559px) {
+    .card .scatter {
+        width: 750px;
+    }
+}
+
+@media screen and (min-width: 1560px) and (max-width: 1679px) {
+    .card .scatter {
+        width: 850px;
+    }
+}
+
+@media screen and (min-width: 1650px) and (max-width: 1749px) {
+    .card .scatter {
+        width: 900px;
+    }
+}
+
+@media screen and (min-width: 1750px) and (max-width: 1849px) {
+    .card .scatter {
+        width: 950px;
+    }
+}
+
+@media screen and (min-width: 1850px) and (max-width: 1919px) {
+    .card .scatter {
+        width: 1000px;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .card .scatter {
+        width: 1000px;
+    }
+}*/
