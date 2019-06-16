@@ -14,7 +14,6 @@ from .models import Group, Video
 from . import vids
 from .forms import VidForm
 
-
 class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 
     def test_func(self):
@@ -210,6 +209,17 @@ class CategoriesView(generic.ListView):
 #    Video.objects.all().delete()
 #    context={}
 #    return render(request,'stats/groupedit.html',context)
+
+def DataView(request):
+
+    group = Group.objects.all()
+    gender = group.values('gender').annotate(Views=Sum('total_view_count')).values('gender', 'Views')
+    genderCount = group.values('gender').annotate(c=Count('gender')).values('gender', 'c')
+    company = group.values('company').annotate(Views=Sum('total_view_count'), Vids=Sum('video_count'))\
+        .values('company', 'Views', 'Vids')
+
+    return render(request, 'stats/data.html', {"group": group, "company": company, "gender": gender,
+                                               "genderCount": genderCount})
 
 def GraphView(request, gender):
 

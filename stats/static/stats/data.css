@@ -1,0 +1,145 @@
+footer {
+    background-color: #e9ecef;
+    margin-top: 100px;
+}
+
+.topButton {
+    margin-top: 90px;
+}
+
+.holder {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.collapsed {
+    border-radius: 5px 5px 5px 5px;
+}
+
+.choose a {
+    text-decoration: none;
+}
+
+.card-header {
+    color: white;
+}
+
+.choose:hover {
+    color: #ffc107;
+}
+
+.card-body {
+    //background-color: rgb(186, 186, 186);
+    background-color: #E9ECEF;
+    //margin-bottom: 50px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+
+
+.chart {
+    width: 100%;
+}
+
+.below {
+    margin-top: 20px;
+}
+
+/*@media screen and (max-width: 979px) {
+    .card .googlecharts {
+        zoom: 1;
+    }
+}
+
+*/
+@media screen and (min-width: 480px) and (max-width: 579px) {
+    .card .googlecharts {
+        zoom: .4;
+    }
+}
+
+@media screen and (min-width: 580px) and (max-width: 679px) {
+    .card .googlecharts {
+        zoom: .5;
+    }
+}
+
+@media screen and (min-width: 680px) and (max-width: 779px) {
+    .card .googlecharts {
+        zoom: .6;
+    }
+}
+
+@media screen and (min-width: 780px) and (max-width: 879px) {
+    .card .googlecharts {
+        zoom: .7;
+    }
+}
+
+@media screen and (min-width: 880px) and (max-width: 1009px) {
+    .card .googlecharts {
+        zoom: .8;
+    }
+}
+
+@media screen and (min-width: 1010px) and (max-width: 1089px) {
+    .card .googlecharts {
+        zoom: .9;
+    }
+}
+
+@media screen and (min-width: 1090px) and (max-width: 1179px) {
+    .card .googlecharts {
+        zoom: 1;
+    }
+}
+
+@media screen and (min-width: 1180px) and (max-width: 1279px) {
+    .card .googlecharts {
+        zoom: 1.1;
+    }
+}
+
+@media screen and (min-width: 1280px) and (max-width: 1379px) {
+    .card .googlecharts {
+        zoom: 1.2;
+    }
+}
+
+@media screen and (min-width: 1380px) and (max-width: 1479px) {
+    .card .googlecharts {
+        zoom: 1.3;
+    }
+}
+
+@media screen and (min-width: 1480px) and (max-width: 1579px) {
+    .card .googlecharts {
+        zoom: 1.4;
+    }
+}
+
+@media screen and (min-width: 1580px) and (max-width: 1669px) {
+    .card .googlecharts {
+        zoom: 1.5;
+    }
+}
+
+@media screen and (min-width: 1670px) and (max-width: 1749px) {
+    .card .googlecharts {
+        zoom: 1.6;
+    }
+}
+
+@media screen and (min-width: 1750px) and (max-width: 1919px) {
+    .card .googlecharts {
+        zoom: 1.7;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .card .googlecharts {
+        zoom: 1.8;
+    }
+}

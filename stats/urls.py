@@ -23,4 +23,5 @@ urlpatterns = [
     path('compare/oldest/<int:pk>/<str:name>', views.CompareViewOldest, name='compareoldest'),
     path('compare/newest/<int:pk>/<str:name>', views.CompareViewNewest, name='comparenewest'),
     path('comparing/<int:pk>/<int:pk2>', views.ComparingView, name='comparing'),
+    path('data/', views.DataView, name='data'),
 ]
