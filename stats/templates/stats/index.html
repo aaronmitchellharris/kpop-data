@@ -25,14 +25,17 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="'nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'stats:about' %}">About</a>
                     </li>
-                    <li class="'nav-item">
-                        <a class="nav-link" href="{% url 'stats:groups' %}">Groups</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'stats:groups' %}">Artists</a>
                     </li>
-                    <li class="'nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'stats:graph' 'all' %}">Graphs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'stats:data' %}">Data</a>
                     </li>
                 </ul>
                 <form action="/groups/" class="form-inline my-2 my-lg-0">

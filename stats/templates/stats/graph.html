@@ -8,166 +8,257 @@
         <meta charset="'utf-8">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{% static 'stats/graph.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'stats/data.css' %}">
 
         <script src="https://kit.fontawesome.com/ecc9da9fa7.js"></script>
 
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
-            google.charts.load('current', {'packages': ['corechart']});
-            google.charts.setOnLoadCallback(init);
+            google.charts.load('current', {'packages': ['table', 'corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            google.charts.setOnLoadCallback(drawChart2);
+            google.charts.setOnLoadCallback(drawChart3);
+            google.charts.setOnLoadCallback(drawChart4);
+            google.charts.setOnLoadCallback(drawChart5);
+            google.charts.setOnLoadCallback(drawChart6);
 
-            function init() {
+            function drawChart() {
 
-                function getRandomColor(str){
-                    var hash = 0;
-                    for (var i = 0; i < str.length; i++) {
-                       hash = str.charCodeAt(i) + ((hash << 5) - hash);
-                    }
-                    var c = (hash & 0x00FFFFFF)
-                        .toString(16)
-                        .toUpperCase();
+                var data = new google.visualization.arrayToDataTable([
 
-                    return "00000".substring(0, 6 - c.length) + c;
-                }
+                    ['Name', 'Company', 'Members', 'Sex', 'Videos', 'AVG Views/Video', 'Views'],
+                    {% for g in group %}
+                        ['{{ g }}', '{{ g.company }}', {{ g.current_member_count }}, '{{ g.gender }}',{{ g.video_count }}, {{ g.total_view_count }} / {{ g.video_count }}, {{ g.total_view_count }}],
+                    {% endfor %}
+
+                ]);
 
                 var options = {
-                    'title' : 'Total Music Video Views',
-                    'height': 2200,
-                    'width': 1700,
-                    'legend': 'none',
-                    'animation': {
-                        "startup": true,
-                        duration: 1000,
-                        easing: 'out',
-                    },
-                    hAxis: {
-                        format: 'short',
-                    },
-                    'chartArea': {width:'75%',height:'90%'}
+                    sortColumn: 6,
+                    sortAscending: false,
+                    width: '100%',
                 };
 
-                var data = [];
-                data[0] = new google.visualization.arrayToDataTable([
-                    ['Name', 'Views', {role: 'style'}],
-                    {% for g in group %}
-                        ['{{ g }}'.replace("&#39;", "\'"), {{ g.total_view_count }}, getRandomColor('{{g}}')],
-                    {% endfor %}
-                ]);
+                var chart = new google.visualization.Table(document.getElementById('chart_div'));
+                chart.draw(data, options);
 
-                data[1] = new google.visualization.arrayToDataTable([
-                    ['Name', 'Views', {role: 'style'}],
-                    {% for v in videos %}
-                        ['{{ v.group }}'.replace("&#39;", "\'"), {{ v.view_count }}, getRandomColor('{{v.group}}')],
-                    {% endfor %}
-                ]);
-
-                data[2] = new google.visualization.arrayToDataTable([
-                    ['Name', 'Views', {role: 'style'}],
-                    {% for v in top %}
-                        ['{{ v.0 }}'.replace("&#39;", "\'"), {{ v.1 }}, getRandomColor('{{v.0}}')],
-                    {% endfor %}
-                ]);
-
-                data[3] = new google.visualization.arrayToDataTable([
-                    ['Name', 'Views', {role: 'style'}],
-                    {% for v in last %}
-                        ['{{ v.group }}'.replace("&#39;", "\'"), {{ v.view_count }}, getRandomColor('{{v.group}}')],
-                    {% endfor %}
-                ]);
-
-                data[4] = new google.visualization.arrayToDataTable([
-                    ['Name', 'Views', {role: 'style'}],
-                    {% for v in recent %}
-                        ['{{ v.0 }}'.replace("&#39;", "\'"), {{ v.1 }}, getRandomColor('{{v.0}}')],
-                    {% endfor %}
-                ]);
-
-                var current = 0;
-                var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-                var button = document.getElementById('default');
-                var bestButton = document.getElementById('best');
-                var topButton = document.getElementById('top');
-                var lastButton = document.getElementById('last');
-                var recentButton = document.getElementById('recent');
-
-
-
-                function drawChart() {
-                    button.disabled = true;
-                    bestButton.disabled = true;
-                    topButton.disabled = true;
-                    lastButton.disabled = true;
-                    recentButton.disabled = true;
-                    google.visualization.events.addListener(chart, 'ready',
-                        function() {
-                            button.disabled = false;
-                        });
-                    google.visualization.events.addListener(chart, 'ready',
-                        function() {
-                            bestButton.disabled = false;
-                        });
-                    google.visualization.events.addListener(chart, 'ready',
-                        function() {
-                            topButton.disabled = false;
-                        });
-                    google.visualization.events.addListener(chart, 'ready',
-                        function() {
-                            lastButton.disabled = false;
-                        });
-                    google.visualization.events.addListener(chart, 'ready',
-                        function() {
-                            recentButton.disabled = false;
-                        });
-
-                    var formatter = new google.visualization.NumberFormat({
-                        pattern: 'short'
-                    });
-                    formatter.format(data[current], 1);
-                    formatter.format(data[current], 2);
-
-                    var view = new google.visualization.DataView(data[current]);
-                    view.setColumns([0, 1,{
-                        calc: "stringify",
-                        sourceColumn: 1,
-                        type: "string",
-                        role: "annotation" },
-                        2]);
-
-                    chart.draw(view, options);
-                }
-                drawChart();
-
-                button.onclick = function() {
-                    current = 0;
-                    options['title'] = 'Total Music Video Views';
-                    drawChart();
-                }
-
-                bestButton.onclick = function() {
-                    current = 1;
-                    options['title'] = 'Highest Single Music Video Views';
-                    drawChart();
-                }
-
-                topButton.onclick = function() {
-                    current = 2;
-                    options['title'] = 'Top 3 Music Video Views';
-                    drawChart();
-                }
-
-                lastButton.onclick = function() {
-                    current = 3;
-                    options['title'] = 'Most Recent Music Video Views';
-                    drawChart();
-                }
-
-                recentButton.onclick = function() {
-                    current = 4;
-                    options['title'] = '3 Most Recent Music Video Views';
-                    drawChart();
-                }
             }
+            drawChart();
+
+            function drawChart2() {
+
+                var data = new google.visualization.arrayToDataTable([
+
+                    ['Company', 'Groups', 'AVG Views per Group', 'Videos', 'AVG Views per Video', 'Views'],
+                    {% for c in company %}
+                        ['{{ c.company }}', {{ c.c }}, {{ c.Views }} / {{ c.c }}, {{ c.Vids }}, {{ c.Views }} / {{ c.Vids }}, {{ c.Views }}],
+                    {% endfor %}
+
+                ]);
+
+                var options = {
+                    sortColumn: 5,
+                    sortAscending: false,
+                    width: '100%',
+                };
+
+                var chart = new google.visualization.Table(document.getElementById('chart_div2'));
+                chart.draw(data, options);
+
+            }
+            drawChart2();
+
+            function drawChart3() {
+
+                var data = new google.visualization.arrayToDataTable([
+
+                    ['Sex', 'Views'],
+                    {% for g in gender %}
+                        ['{{ g.gender }}', {{ g.Views }}],
+                    {% endfor %}
+
+                ]);
+
+                var options = {
+                    backgroundColor: '#E9ECEF',
+                    legend: {
+                        position: 'bottom',
+                        alignment: 'center',
+                    },
+                    width: '100%',
+                    height: '350',
+                    chartArea: {
+                        height: '300',
+                        width: '100%',
+                        left: 5,
+                        right: 0,
+                    },
+                    /*chartArea: {
+                        height: '80%',
+                        width: '100%',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                    },*/
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
+                chart.draw(data, options);
+
+            }
+            drawChart3();
+
+            function drawChart4() {
+
+                var data = new google.visualization.arrayToDataTable([
+
+                    ['Sex', 'Groups'],
+                    {% for g in genderCount %}
+                        ['{{ g.gender }}', {{ g.c }}],
+                    {% endfor %}
+
+                ]);
+
+                var options = {
+                    backgroundColor: '#E9ECEF',
+                    legend: {
+                        position: 'bottom',
+                        alignment: 'center',
+                    },
+                    width: '100%',
+                    height: '350',
+                    chartArea: {
+                        height: '300',
+                        width: '100%',
+                        left: 5,
+                        right: 0,
+                    },
+                    /*chartArea: {
+                        height: '80%',
+                        width: '100%',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                    },*/
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div4'));
+                chart.draw(data, options);
+
+            }
+            drawChart4();
+
+            function drawChart5() {
+
+                var data = new google.visualization.arrayToDataTable([
+
+                    ['Company', 'Groups'],
+                    {% for c in company %}
+                        ['{{ c.company }}', {{ c.c }}],
+                    {% endfor %}
+
+                ]);
+
+                var options = {
+                    backgroundColor: '#E9ECEF',
+                    legend: {
+                        position: 'bottom',
+                        alignment: 'center',
+                    },
+                    width: '100%',
+                    height: '350',
+                    chartArea: {
+                        height: '300',
+                        width: '100%',
+                        left: 5,
+                        right: 0,
+                    },
+                    /*chartArea: {
+                        height: '80%',
+                        width: '100%',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                    },*/
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div5'));
+                chart.draw(data, options);
+
+            }
+            drawChart5();
+
+            function drawChart6() {
+
+                var data = new google.visualization.arrayToDataTable([
+
+                    ['Upload Date', 'Views'],
+                    {% for v in videos %}
+                        [new Date({{ v.upload_date|date:"U" }} * 1000), {{ v.view_count }}],
+                    {% endfor %}
+
+                ]);
+
+                var options = {
+                    backgroundColor: '#E9ECEF',
+                    legend: {
+                        position: 'none',
+                        alignment: 'center',
+                    },
+                    width: '100%',
+                    height: '500',
+                    chartArea: {
+                        height: '150',
+                        width: '100%',
+                        left: 75,
+                        right: 20,
+                        top: 40,
+                        bottom: 40
+                    },
+                    hAxis: {
+                        title: 'Date',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        gridlines: {
+                            count: -1,
+                            color: 'black',
+                        },
+                        minorGridlines: {
+                            count: 0
+                        }
+                    },
+                    vAxis: {
+                        title: 'Views',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        format: 'short',
+                        minValue: 0,
+                        //maxValue: {{maxVid.view_count}},
+                        gridlines: {
+                            count: 2,
+                            color: 'black'
+                        }
+                    },
+                    /*chartArea: {
+                        height: '80%',
+                        width: '100%',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                    },*/
+                };
+
+                var chart = new google.visualization.ScatterChart(document.getElementById('chart_div6'));
+                chart.draw(data, options);
+
+            }
+            drawChart6();
 
         </script>
         <title></title>
@@ -184,53 +275,110 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ul class="navbar-nav">
-                    <li class="'nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'stats:about' %}">About</a>
                     </li>
-                    <li class="'nav-item">
-                        <a class="nav-link" href="{% url 'stats:groups' %}">Groups</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'stats:groups' %}">Artists</a>
                     </li>
-                    <li class="'nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'stats:graph' 'all' %}">Graphs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'stats:data' %}">Data</a>
                     </li>
                 </ul>
             </div>
             <form action="/groups/" class="form-inline my-2 my-lg-0">
                 <input id="search_box" name="search" class="form-control mr-sm-2" type="search" placeholder="Search for artist" aria-label="Search">
-                <button id="search_submit" class="btn btn-outline-warning my-2 my-sm-0" type="search">Search</button>
+                <button id="search_submit" class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
             </form>
         </nav>
 
 
         <div class="container-fluid jumbotron topButton">
-            <div class="row" id="buttons">
-                <div class="col">
-                    <h3><i class="fas fa-venus-mars"></i> Gender</h3>
-                    <div id="genderBtnContainer">
-                        <a class="btn" id="All" href="{% url 'stats:graph' 'all' %}">All</a>
-                        <a class="btn" id="Boys" href="{% url 'stats:graph' 'B' %}">Boys</a>
-                        <a class="btn" id="Girls" href="{% url 'stats:graph' 'G' %}">Girls</a>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <h3><i class="fas fa-filter"></i> Filter</h3>
-                    <div id="filterBtnContainer">
-                        <button class="btn gactive" id="default" onclick="drawChart()">All</button>
-                        <button class="btn" id="best" onclick="drawChartBest()">Best</button>
-                        <button class="btn" id="top" onclick="drawChartTop()">Top</button>
-                        <button class="btn" id="last" onclick="drawChartLast()">Last</button>
-                        <button class="btn" id="recent" onclick="drawChartRecent()">Recent</button>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <!--<div class="jumbotron jumbotron-fluid">
+        <!--{% for c in company %}
+            <p>{{ c }}</p>
+        {% endfor %}
+        <div class="jumbotron jumbotron-fluid">
             <div class="container-fluid" id="chart_div" align="center"></div>
         </div>-->
+
         <div class="container-fluid">
-            <div class="googlecharts" id="chart_div" align="center">
+            <div class="row">
+                <div class="col-7">
+                    <a class="btn btn-dark container-fluid holder choose" href="#chart1" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                        Groups Data
+                    </a>
+                    <div class="collapse show" id="chart1">
+                           <div class="holder googlecharts" id="chart_div" align="center"></div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose" href="#chart3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                Views by Gender
+                            </a>
+                            <div class="collapse show" id="chart3">
+                                <div class="container-fluid card card-body">
+                                    <div class="holder googlecharts zoom" id="chart_div3" align="center"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose below" href="#chart4" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                Groups by Gender
+                            </a>
+                            <div class="collapse show" id="chart4">
+                                <div class="container-fluid card card-body">
+                                    <div class="holder googlecharts zoom" id="chart_div4" align="center"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose below" href="#chart5" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                Groups by Company
+                            </a>
+                            <div class="collapse show" id="chart5">
+                                <div class="container-fluid card card-body">
+                                    <div class="holder googlecharts zoom" id="chart_div5" align="center"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose" href="#chart2" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                Company Data
+                            </a>
+                            <div class="collapse show" id="chart2">
+                                <div class="holder googlecharts" id="chart_div2" align="center"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <a class="btn btn-dark container-fluid holder choose below" href="#chart6" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                        Views Scatter Plot
+                    </a>
+                    <div class="collapse show" id="chart6">
+                        <div class="container-fluid card card-body">
+                            <div class="googlecharts zoom" id="chart_div6"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <a class="btn btn-dark container-fluid holder choose below" href="#chart7" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                        TBD
+                    </a>
+                    <div class="collapse show" id="chart7">
+                        <div class="container-fluid card card-body">
+                            <div class="holder googlecharts" id="chart_div7"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -315,7 +463,7 @@
             }
         </script>
 
-        <script src="{% static 'stats/graph.js' %}"></script>
+        <script src="{% static 'stats/data.js' %}"></script>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
