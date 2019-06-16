@@ -216,7 +216,21 @@ def DataView(request):
 
     group = Group.objects.all()
     gender = group.values('gender').annotate(Views=Sum('total_view_count')).values('gender', 'Views')
+    for i,g in enumerate(gender):
+        if g['gender'] == 'B':
+            gender[i]['gender'] = 'Boys'
+        elif g['gender'] == 'G':
+            gender[i]['gender'] = 'Girls'
+        elif g['gender'] == 'M':
+            gender[i]['gender'] = 'Mixed'
     genderCount = group.values('gender').annotate(c=Count('gender')).values('gender', 'c')
+    for i,g in enumerate(genderCount):
+        if g['gender'] == 'B':
+            genderCount[i]['gender'] = 'Boys'
+        elif g['gender'] == 'G':
+            genderCount[i]['gender'] = 'Girls'
+        elif g['gender'] == 'M':
+            genderCount[i]['gender'] = 'Mixed'
     videos = Video.objects.all()
 
     company = group.values('company').annotate(Views=Sum('total_view_count'), Vids=Sum('video_count'),

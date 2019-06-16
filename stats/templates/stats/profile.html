@@ -23,13 +23,13 @@
                 var data = new google.visualization.arrayToDataTable([
                     ['Upload Date', 'Views'],
                     {% for v in vid_list %}
-                        [new Date({{ v.upload_date|date:"U" }} * 1000), {{ v.view_count }}],
+                        [{ v:new Date({{ v.upload_date|date:"U" }} * 1000), f:'{{ v.title }}\n{{v.upload_date}}\n'.replace("&#39;", "\'").replace("&#39;", "\'").replace("&quot;", "\"").replace("&quot;", "\"") }, {{ v.view_count }}],
                     {% endfor %}
                 ]);
 
                 var options = {
                     'height': 500,
-                    'width': 1000,
+                    'width': '1000',
                     'legend': 'none',
                     backgroundColor: '#E9ECEF',
                     colors: ['#ffc107'],
@@ -53,6 +53,13 @@
                         minorGridlines: {
                             count: 0
                         }
+                    },
+                    chartArea: {
+                        height: 400,
+                        width: '100%',
+                        left: 75,
+                        right: 50,
+                        top: 20
                     },
                     vAxis: {
                         title: 'Views',
@@ -94,6 +101,13 @@
                         "startup": true,
                         duration: 1000,
                         easing: 'out',
+                    },
+                    chartArea: {
+                        height: '500',
+                        left: 75,
+                        right: 20,
+                        top: 20,
+                        bottom: 50
                     },
                     hAxis: {
                         title: 'Month Uploaded',
