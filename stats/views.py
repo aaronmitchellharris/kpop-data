@@ -224,13 +224,7 @@ def DataView(request):
         elif g['gender'] == 'M':
             gender[i]['gender'] = 'Mixed'
     genderCount = group.values('gender').annotate(c=Count('gender')).values('gender', 'c')
-    for i,g in enumerate(genderCount):
-        if g['gender'] == 'B':
-            genderCount[i]['gender'] = 'Boys'
-        elif g['gender'] == 'G':
-            genderCount[i]['gender'] = 'Girls'
-        elif g['gender'] == 'M':
-            genderCount[i]['gender'] = 'Mixed'
+
     videos = Video.objects.all()
 
     company = group.values('company').annotate(Views=Sum('total_view_count'), Vids=Sum('video_count'),
@@ -238,6 +232,21 @@ def DataView(request):
 
     return render(request, 'stats/data.html', {"group": group, "company": company, "gender": gender,
                                                "genderCount": genderCount, "videos": videos})
+
+def GenderDataView(request):
+
+    gender = Group.objects.all().values('gender')\
+        .annotate(g=Count('id'), v=Sum('video_count'), i=Sum('current_member_count'), views=Sum('total_view_count'))\
+        .values('gender', 'g', 'v', 'i', 'views')
+    for i, g in enumerate(gender):
+        if g['gender'] == 'B':
+            gender[i]['gender'] = 'Boys'
+        elif g['gender'] == 'G':
+            gender[i]['gender'] = 'Girls'
+        elif g['gender'] == 'M':
+            gender[i]['gender'] = 'Mixed'
+
+    return render(request, 'stats/genderData.html', {"gender": gender})
 
 def GraphView(request, gender):
 
