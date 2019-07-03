@@ -25,4 +25,5 @@ urlpatterns = [
     path('comparing/<int:pk>/<int:pk2>', views.ComparingView, name='comparing'),
     path('data/', views.DataView, name='data'),
     path('data/gender/', views.GenderDataView, name='genderData'),
+    path('data/company/', views.CompanyDataView, name='companyData'),
 ]

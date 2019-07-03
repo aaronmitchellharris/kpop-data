@@ -225,19 +225,21 @@ def DataView(request):
             gender[i]['gender'] = 'Mixed'
     genderCount = group.values('gender').annotate(c=Count('gender')).values('gender', 'c')
 
+    groupYear = group.annotate(year=ExtractYear('debut_date')).values('year').annotate(c=Count('id')).values('year','c')
+
     videos = Video.objects.all()
 
     company = group.values('company').annotate(Views=Sum('total_view_count'), Vids=Sum('video_count'),
                                                c=Count('company')).values('company', 'Views', 'Vids', 'c')
 
     return render(request, 'stats/data.html', {"group": group, "company": company, "gender": gender,
-                                               "genderCount": genderCount, "videos": videos})
+                                               "genderCount": genderCount, "videos": videos, "groupYear": groupYear})
 
 def GenderDataView(request):
 
     gender = Group.objects.all().values('gender')\
-        .annotate(g=Count('id'), v=Sum('video_count'), i=Sum('current_member_count'), views=Sum('total_view_count'))\
-        .values('gender', 'g', 'v', 'i', 'views')
+        .annotate(g=Count('id'), v=Sum('video_count'), i=Sum('current_member_count'),
+                  views=Sum('total_view_count')).values('gender', 'g', 'v', 'i', 'views')
     for i, g in enumerate(gender):
         if g['gender'] == 'B':
             gender[i]['gender'] = 'Boys'
@@ -246,7 +248,41 @@ def GenderDataView(request):
         elif g['gender'] == 'M':
             gender[i]['gender'] = 'Mixed'
 
-    return render(request, 'stats/genderData.html', {"gender": gender})
+    genderYear = Group.objects.all().values('gender').annotate(year=ExtractYear('debut_date'), gcount=Count('gender'))\
+        .values('gender','year','gcount')
+
+    genderY = []
+
+    minYear = Group.objects.all().annotate(year=ExtractYear('debut_date')).values('year').order_by('year')[0]['year']
+    maxYear = Group.objects.all().annotate(year=ExtractYear('debut_date')).values('year').order_by('year').reverse()[0]['year']
+
+    for i in range(minYear, maxYear+1):
+        genderY.append([i, 0, 0, 0])
+
+    for j in genderYear:
+        if j['gender'] == 'B':
+            for e in genderY:
+                if e[0] >= j['year']:
+                    e[1] += j['gcount']
+        if j['gender'] == 'G':
+            for e in genderY:
+                if e[0] >= j['year']:
+                    e[2] += j['gcount']
+        if j['gender'] == 'M':
+            for e in genderY:
+                if e[0] >= j['year']:
+                    e[3] += j['gcount']
+
+
+
+    return render(request, 'stats/genderData.html', {"gender": gender, "genderYear": genderYear, "minYear": minYear, "maxYear": maxYear, "genderY": genderY})
+
+def CompanyDataView(request):
+
+    group = Group.objects.all()
+    company = group.values('company').annotate(Views=Sum('total_view_count'), Vids=Sum('video_count'),
+                                               c=Count('company')).values('company', 'Views', 'Vids', 'c')
+    return render(request, 'stats/companyData.html', {"group": group, "company": company})
 
 def GraphView(request, gender):
 

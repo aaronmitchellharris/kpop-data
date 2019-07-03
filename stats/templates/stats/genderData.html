@@ -8,7 +8,7 @@
         <meta charset="'utf-8">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{% static 'stats/data.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'stats/genderData.css' %}">
 
         <script src="https://kit.fontawesome.com/ecc9da9fa7.js"></script>
 
@@ -16,6 +16,13 @@
         <script type="text/javascript">
             google.charts.load('current', {'packages': ['table', 'corechart']});
             google.charts.setOnLoadCallback(drawChart);
+            google.charts.setOnLoadCallback(drawChart2);
+            google.charts.setOnLoadCallback(drawChart3);
+            google.charts.setOnLoadCallback(drawChart4);
+            google.charts.setOnLoadCallback(drawChart5);
+            google.charts.setOnLoadCallback(drawChart6);
+            google.charts.setOnLoadCallback(drawChart7);
+            google.charts.setOnLoadCallback(drawChart8);
 
             function drawChart() {
 
@@ -39,6 +46,431 @@
 
             }
             drawChart;
+
+            function drawChart2() {
+
+                var data = new google.visualization.arrayToDataTable([
+
+                    ['Sex', 'Views'],
+                    {% for g in gender %}
+                        [ '{{ g.gender }}' , {{ g.v }}],
+                    {% endfor %}
+
+                ]);
+
+                var options = {
+                    backgroundColor: '#E9ECEF',
+                    legend: {
+                        position: 'bottom',
+                        alignment: 'center',
+                    },
+                    width: '100%',
+                    height: '250',
+                    chartArea: {
+                        height: '200',
+                        width: '30%',
+                        left: 5,
+                        right: 0,
+                        top: 10
+                    },
+                    /*chartArea: {
+                        height: '80%',
+                        width: '100%',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                    },*/
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
+                chart.draw(data, options);
+
+            }
+            drawChart2;
+
+            function drawChart3() {
+
+                var data = new google.visualization.arrayToDataTable([
+
+                    ['Sex', 'Views'],
+                    {% for g in gender %}
+                        [ '{{ g.gender }}' , {{ g.views }}],
+                    {% endfor %}
+
+                ]);
+
+                var options = {
+                    backgroundColor: '#E9ECEF',
+                    legend: {
+                        position: 'bottom',
+                        alignment: 'center',
+                    },
+                    width: '100%',
+                    height: '250',
+                    chartArea: {
+                        height: '200',
+                        width: '30%',
+                        left: 5,
+                        right: 0,
+                        top: 10
+                    },
+                    /*chartArea: {
+                        height: '80%',
+                        width: '100%',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                    },*/
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
+                chart.draw(data, options);
+
+            }
+            drawChart3;
+
+            function drawChart4() {
+
+                var data = new google.visualization.arrayToDataTable([
+
+                    ['Sex', 'Groups'],
+                    {% for g in gender %}
+                        ['{{ g.gender }}', {{ g.g }}],
+                    {% endfor %}
+
+                ]);
+
+                var options = {
+                    backgroundColor: '#E9ECEF',
+                    legend: {
+                        position: 'bottom',
+                        alignment: 'center',
+                    },
+                    width: '100%',
+                    height: '250',
+                    chartArea: {
+                        height: '200',
+                        width: '100%',
+                        left: 5,
+                        right: 0,
+                        top: 10
+                    },
+                    /*chartArea: {
+                        height: '80%',
+                        width: '100%',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                    },*/
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div4'));
+                chart.draw(data, options);
+
+            }
+            drawChart4;
+
+            function drawChart5() {
+                var data = new google.visualization.arrayToDataTable([
+                    ['Gender', 'AVG Views'],
+                    {% for g in gender %}
+                        ['{{ g.gender }}', {{ g.views }}/{{ g.g }}],
+                    {% endfor %}
+                ]);
+
+                var formatter = new google.visualization.NumberFormat({
+                        pattern: 'short'
+                    });
+
+                formatter.format(data, 1);
+
+                var options = {
+                    width: '100%',
+                    height: '500',
+                    chartArea: {
+                        height: '150',
+                        width: '100%',
+                        left: 75,
+                        right: 20,
+                        top: 40,
+                        bottom: 40
+                    },
+                    'legend': 'none',
+                    bar: {groupWidth: "65%"},
+                    backgroundColor: '#E9ECEF',
+                    colors: ['#ffc107'],
+                    'animation': {
+                        "startup": true,
+                        duration: 1000,
+                        easing: 'out',
+                    },
+                    hAxis: {
+                        title: 'Gender',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        gridlines: {
+                            count: -1,
+                            color: 'black',
+                        },
+                        minorGridlines: {
+                            count: 0
+                        },
+                    },
+                    vAxis: {
+                        title: 'AVG Views',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        gridlines: {
+                            count: 2,
+                            color: 'black'
+                        },
+                        format: 'short',
+                    },
+                };
+
+                var view = new google.visualization.DataView(data);
+                view.setColumns([0, 1,{
+                    calc: "stringify",
+                    sourceColumn: 1,
+                    type: "string",
+                    role: "annotation"}]);
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('chart_div5'));
+                chart.draw(view, options);
+            };
+            drawChart5;
+
+            function drawChart6() {
+                var data = new google.visualization.arrayToDataTable([
+                    ['Gender', 'AVG Views'],
+                    {% for g in gender %}
+                        ['{{ g.gender }}', {{ g.v }}/{{ g.g }}],
+                    {% endfor %}
+                ]);
+
+                var formatter = new google.visualization.NumberFormat({
+                        pattern: 'short'
+                    });
+
+                formatter.format(data, 1);
+
+                var options = {
+                    width: '100%',
+                    height: '500',
+                    chartArea: {
+                        height: '150',
+                        width: '100%',
+                        left: 75,
+                        right: 20,
+                        top: 40,
+                        bottom: 40
+                    },
+                    'legend': 'none',
+                    bar: {groupWidth: "65%"},
+                    backgroundColor: '#E9ECEF',
+                    colors: ['#ffc107'],
+                    'animation': {
+                        "startup": true,
+                        duration: 1000,
+                        easing: 'out',
+                    },
+                    hAxis: {
+                        title: 'Gender',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        gridlines: {
+                            count: -1,
+                            color: 'black',
+                        },
+                        minorGridlines: {
+                            count: 0
+                        },
+                    },
+                    vAxis: {
+                        title: 'AVG Videos',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        gridlines: {
+                            count: 2,
+                            color: 'black'
+                        },
+                        format: 'short',
+                    },
+                };
+
+                var view = new google.visualization.DataView(data);
+                view.setColumns([0, 1,{
+                    calc: "stringify",
+                    sourceColumn: 1,
+                    type: "string",
+                    role: "annotation"}]);
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('chart_div6'));
+                chart.draw(view, options);
+            };
+            drawChart6;
+
+            function drawChart7() {
+                var data = new google.visualization.arrayToDataTable([
+                    ['Gender', 'AVG Views'],
+                    {% for g in gender %}
+                        ['{{ g.gender }}', {{ g.i }}/{{ g.g }}],
+                    {% endfor %}
+                ]);
+
+                var formatter = new google.visualization.NumberFormat({
+                        pattern: 'short'
+                    });
+
+                formatter.format(data, 1);
+
+                var options = {
+                    width: '100%',
+                    height: '500',
+                    chartArea: {
+                        height: '150',
+                        width: '100%',
+                        left: 75,
+                        right: 20,
+                        top: 40,
+                        bottom: 40
+                    },
+                    'legend': 'none',
+                    bar: {groupWidth: "65%"},
+                    backgroundColor: '#E9ECEF',
+                    colors: ['#ffc107'],
+                    'animation': {
+                        "startup": true,
+                        duration: 1000,
+                        easing: 'out',
+                    },
+                    hAxis: {
+                        title: 'Gender',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        gridlines: {
+                            count: -1,
+                            color: 'black',
+                        },
+                        minorGridlines: {
+                            count: 0
+                        },
+                    },
+                    vAxis: {
+                        title: 'AVG Members',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        gridlines: {
+                            count: 2,
+                            color: 'black'
+                        },
+                        format: 'short',
+                    },
+                };
+
+                var view = new google.visualization.DataView(data);
+                view.setColumns([0, 1,{
+                    calc: "stringify",
+                    sourceColumn: 1,
+                    type: "string",
+                    role: "annotation"}]);
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('chart_div7'));
+                chart.draw(view, options);
+            };
+            drawChart7;
+
+            function drawChart8() {
+                var data = new google.visualization.arrayToDataTable([
+                    ['Group', 'Boys', 'Girls', 'Mixed'],
+                    {% for g in genderY %}
+                        ['{{ g.0 }}', {{ g.1 }}, {{ g.2 }}, {{ g.3 }}],
+                    {% endfor %}
+
+                ]);
+
+                var options = {
+                    isStacked: true,
+                    'height': 500,
+                    'width': '100%',
+                    chartArea: {
+                        height: '150',
+                        width: '100%',
+                        left: 55,
+                        right: 20,
+                        top: 40,
+                        bottom: 40
+                    },
+                    'legend': 'bottom',
+                    bar: {groupWidth: "75%"},
+                    backgroundColor: '#E9ECEF',
+                    //colors: ['#ff8000', '#0000ff'],
+                    'animation': {
+                        "startup": true,
+                        duration: 1000,
+                        easing: 'out',
+                    },
+                    hAxis: {
+                        title: '',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        gridlines: {
+                            count: -1,
+                            color: 'black',
+                        },
+                        minorGridlines: {
+                            count: 0
+                        },
+                    },
+                    vAxis: {
+                        title: 'Videos',
+                        titleTextStyle: {
+                            italic: false,
+                            bold: true,
+                            fontSize: 20,
+                        },
+                        gridlines: {
+                            count: 2,
+                            color: 'black'
+                        },
+                    },
+                };
+
+                var view = new google.visualization.DataView(data);
+                /*view.setColumns([0, 1,{
+                    calc: "stringify",
+                    sourceColumn: 1,
+                    type: "string",
+                    role: "annotation"}, 2,{
+                    calc: "stringify",
+                    sourceColumn: 2,
+                    type: "string",
+                    role: "annotation"},]);*/
+
+                var chart = new google.visualization.SteppedAreaChart(document.getElementById('chart_div8'));
+                chart.draw(data, options);
+            };
 
         </script>
         <title></title>
@@ -79,31 +511,113 @@
         <div class="container-fluid jumbotron topButton">
         </div>
 
-        <!--{% for g in gender %}
+        <!--{% for g in genderY %}
+            <p>{{ g }}</p>
+        {% endfor %}
+        {% for g in genderYear %}
             <p>{{ g }}</p>
         {% endfor %}
         <div class="jumbotron jumbotron-fluid">
             <div class="container-fluid" id="chart_div" align="center"></div>
-        </div>-->
+        </div>
+        <p>{{genderY}}</p>
+        {% for g in genderY %}
+            <p>{{ g.g }}</p>
+        {% endfor %}-->
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-5">
-                    <a class="btn btn-dark container-fluid holder choose" href="#chart1" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
-                        <i class="fas fa-database"></i> &nbsp;Gender Data
-                    </a>
-                    <div class="collapse show" id="chart1">
-                        <div class="holder googlecharts" id="chart_div" align="center"></div>
+                <div class="col-xl-6 col-5">
+                    <div class="row accordian" id="accordianCharts">
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose" href="#chart1" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                <i class="fas fa-database"></i> &nbsp;Gender Data
+                            </a>
+                            <div class="collapse show" id="chart1">
+                                <div class="holder googlecharts" id="chart_div" align="center"></div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose below" href="#chart5" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                <i class="far fa-chart-bar"></i> &nbsp;AVG Views Per Gender
+                            </a>
+                            <div class="collapse show" id="chart5" data-parent="#accordianCharts">
+                                <div class="container-fluid card card-body">
+                                    <div class="googlecharts zoom" id="chart_div5"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose below collapsed" href="#chart6" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                <i class="far fa-chart-bar"></i> &nbsp;AVG Videos Per Gender
+                            </a>
+                            <div class="c1 collapse show" id="chart6" data-parent="#accordianCharts">
+                                <div class="container-fluid card card-body">
+                                    <div class="googlecharts zoom" id="chart_div6"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose below collapsed" href="#chart7" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                <i class="far fa-chart-bar"></i> &nbsp;AVG Members Per Gender
+                            </a>
+                            <div class="c1 collapse show" id="chart7" data-parent="#accordianCharts">
+                                <div class="container-fluid card card-body">
+                                    <div class="googlecharts zoom" id="chart_div7"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose below collapsed" href="#chart8" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                <i class="fas fa-chart-area"></i> &nbsp;Number of Groups
+                            </a>
+                            <div class="c1 collapse show" id="chart8" data-parent="#accordianCharts">
+                                <div class="container-fluid card card-body">
+                                    <div class="googlecharts zoom" id="chart_div8"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-5">
-
+                <div class="col-xl-4 col-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose" href="#chart3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                <i class="fas fa-chart-pie"></i> &nbsp;Views by Gender
+                            </a>
+                            <div class="collapse show" id="chart3">
+                                <div class="container-fluid card card-body">
+                                    <div class="holder googlecharts zoom" id="chart_div3" align="center"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose below" href="#chart4" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                <i class="fas fa-chart-pie"></i> &nbsp;Groups by Gender
+                            </a>
+                            <div class="collapse show" id="chart4">
+                                <div class="container-fluid card card-body">
+                                    <div class="holder googlecharts zoom" id="chart_div4" align="center"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-dark container-fluid holder choose below" href="#chart2" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                <i class="fas fa-chart-pie"></i> &nbsp;Videos by Gender
+                            </a>
+                            <div class="collapse show" id="chart2">
+                                <div class="container-fluid card card-body">
+                                    <div class="holder googlecharts zoom" id="chart_div2" align="center"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-2">
                     <div class="btn-group-vertical" role="group" aria-label="...">
                         <a class="btn" href="{% url 'stats:data' %}">All Data</a>
                         <a class="btn" href="{% url 'stats:genderData' %}">Gender Data</a>
-                        <a class="btn" href="{% url 'stats:genderData' %}">Company Data</a>
+                        <a class="btn" href="{% url 'stats:companyData' %}">Company Data</a>
                     </div>
                 </div>
             </div>
@@ -175,20 +689,6 @@
           <!-- Copyright -->
         </footer>
         <!-- Footer -->
-
-        <script>
-            if ('{{ gender }}' == 'all') {
-                document.getElementById("All").className += " cactive"
-            }
-
-            if ('{{ gender }}' == 'B') {
-                document.getElementById("Boys").className += " cactive"
-            }
-
-            if ('{{ gender }}' == 'G') {
-                document.getElementById("Girls").className += " cactive"
-            }
-        </script>
 
         <script src="{% static 'stats/genderData.js' %}"></script>
 

@@ -1,0 +1,251 @@
+footer {
+    background-color: #e9ecef;
+    margin-top: 100px;
+}
+
+.topButton {
+    margin-top: 90px;
+}
+
+.holder {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px 5px 0px 0px;
+}
+
+
+.collapsed {
+    border-radius: 5px 5px 5px 5px;
+}
+
+.choose a {
+    text-decoration: none;
+}
+
+.card-header {
+    color: white;
+}
+
+.choose:hover {
+    color: #ffc107;
+}
+
+.card-body {
+    //background-color: rgb(186, 186, 186);
+    background-color: #E9ECEF;
+    //margin-bottom: 50px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.btn-group-vertical {
+    width: 100%
+}
+
+.btn-group-vertical .btn {
+    background-color: #ffc107;
+    border-color:  white;
+
+}
+
+.btn-group-vertical .btn:hover {
+    background: #f0ad4e;
+}
+
+/*.chart {
+    width: 100%;
+}*/
+
+.below {
+    margin-top: 20px;
+}
+
+/*@media screen and (max-width: 979px) {
+    .card .googlecharts {
+        zoom: 1;
+    }
+}
+
+*/
+
+@media screen and (min-width: 480px) and (max-width: 579px) {
+    .card .zoom {
+        zoom: .2;
+    }
+}
+
+@media screen and (min-width: 580px) and (max-width: 679px) {
+    .card .zoom {
+        zoom: .5;
+    }
+}
+
+@media screen and (min-width: 680px) and (max-width: 779px) {
+    .card .zoom {
+        zoom: .5;
+    }
+}
+
+@media screen and (min-width: 780px) and (max-width: 879px) {
+    .card .zoom {
+        zoom: .7;
+    }
+}
+
+@media screen and (min-width: 880px) and (max-width: 1009px) {
+    .card .zoom {
+        zoom: .8;
+    }
+}
+
+@media screen and (min-width: 1010px) and (max-width: 1089px) {
+    .card .zoom {
+        zoom: .8;
+    }
+}
+
+@media screen and (min-width: 1090px) and (max-width: 1179px) {
+    .card .zoom {
+        zoom: .8;
+    }
+}
+
+@media screen and (min-width: 1180px) and (max-width: 1279px) {
+    .card .zoom {
+        zoom: .8;
+    }
+}
+
+@media screen and (min-width: 1280px) and (max-width: 1379px) {
+    .card .zoom {
+        zoom: .8;
+    }
+}
+
+@media screen and (min-width: 1380px) and (max-width: 1479px) {
+    .card .zoom {
+        zoom: .9;
+    }
+}
+
+@media screen and (min-width: 1480px) and (max-width: 1579px) {
+    .card .zoom {
+        zoom: .9;
+    }
+}
+
+@media screen and (min-width: 1580px) and (max-width: 1669px) {
+    .card .zoom {
+        zoom: .9;
+    }
+}
+
+@media screen and (min-width: 1670px) and (max-width: 1749px) {
+    .card .zoom {
+        zoom: .9;
+    }
+}
+
+@media screen and (min-width: 1750px) and (max-width: 1919px) {
+    .card .zoom {
+        zoom: 1.3;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .card .zoom {
+        zoom: 1.4;
+    }
+}
+
+
+/*
+@media screen and (min-width: 480px) and (max-width: 579px) {
+    .card .scatter {
+        width: 300px;
+    }
+}
+
+@media screen and (min-width: 580px) and (max-width: 679px) {
+    .card .scatter {
+        width: 350px;
+    }
+}
+
+@media screen and (min-width: 680px) and (max-width: 779px) {
+    .card .scatter {
+        width: 400px;
+    }
+}
+
+@media screen and (min-width: 780px) and (max-width: 879px) {
+    .card .scatter {
+        width: 450px;
+    }
+}
+
+@media screen and (min-width: 880px) and (max-width: 1009px) {
+    .card .scatter {
+        width: 500px;
+    }
+}
+
+@media screen and (min-width: 1010px) and (max-width: 1089px) {
+    .card .scatter {
+        width: 550px;
+    }
+}
+
+@media screen and (min-width: 1090px) and (max-width: 1219px) {
+    .card .scatter {
+        width: 600px;
+    }
+}
+
+@media screen and (min-width: 1220px) and (max-width: 1299px) {
+    .card .scatter {
+        width: 650px;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1379px) {
+    .card .scatter {
+        width: 700px;
+    }
+}
+
+@media screen and (min-width: 1380px) and (max-width: 1559px) {
+    .card .scatter {
+        width: 750px;
+    }
+}
+
+@media screen and (min-width: 1560px) and (max-width: 1679px) {
+    .card .scatter {
+        width: 850px;
+    }
+}
+
+@media screen and (min-width: 1650px) and (max-width: 1749px) {
+    .card .scatter {
+        width: 900px;
+    }
+}
+
+@media screen and (min-width: 1750px) and (max-width: 1849px) {
+    .card .scatter {
+        width: 950px;
+    }
+}
+
+@media screen and (min-width: 1850px) and (max-width: 1919px) {
+    .card .scatter {
+        width: 1000px;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .card .scatter {
+        width: 1000px;
+    }
+}*/
