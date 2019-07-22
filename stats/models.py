@@ -3,6 +3,7 @@ from django.utils import timezone
 from . import yt
 import datetime
 
+# model for storing artist information
 class Group(models.Model):
     name = models.CharField(max_length=200)
     debut_date = models.DateField('debut date')
@@ -30,7 +31,9 @@ class Group(models.Model):
     def is_solo(self):
         return (self.current_member_count == 1)
 
+# model for storing music video information
 class Video(models.Model):
+    # give each video object an artist
     group = models.ForeignKey(Group, related_name='videos', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     upload_date = models.DateField('upload date')
@@ -41,10 +44,12 @@ class Video(models.Model):
     def __str__(self):
         return self.title
 
+    # updates view information using Youtube api
     def updateViews(self):
         self.view_count = yt.YTapi.getViewCount(yt_id=self.yt_video_id)[0]
         self.save()
 
+    # update picture/thumbnail information using Youtube api
     def updatePic(self):
         self.thumbnail_url = yt.YTapi.getViewCount(yt_id=self.yt_video_id)[1]
         self.save()

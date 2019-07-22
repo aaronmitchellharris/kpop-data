@@ -3,6 +3,7 @@ import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
 
+# utilization of Youtube api
 class YTapi:
 
     scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]

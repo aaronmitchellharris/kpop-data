@@ -14,27 +14,27 @@ from .models import Group, Video
 from . import vids
 from .forms import VidForm
 
+# used for authorization of staff pages
 class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 
     def test_func(self):
         return self.request.user.is_superuser or self.request.user.is_staff
 
+# home view
 def IndexView(request):
     object_list = Group.objects.all()
-    bp = Group.objects.filter(pk='1')
 
-    #if request.method == 'GET':
-    #    search_query = request.GET.get('search_box', None)
-
-    if 'search' in request.GET:
-        search_term = request.GET['search']
-
+    '''
+    object_list: all elements of Group model
+    '''
     return render(request, 'stats/index.html', {"object_list": object_list, "bp":bp})
 
+# about view
 class AboutView(generic.ListView):
     template_name = 'stats/about.html'
     model = Group
 
+# view for comparing 2 artists
 def ComparingView(request, pk, pk2):
 
     g1 = Group.objects.get(pk=pk)
@@ -92,15 +92,31 @@ def ComparingView(request, pk, pk2):
             if y['year'] == item[0]:
                 item[2] = y['cy2']
 
+    '''
+    g1, g2: element of first and second group
+    g1stats, g2stats: view count and upload dates for first and second group
+    dV: g1,g2 data by month
+    yV: g1,g2 data by year
+    '''
     return render(request, 'stats/comparing.html',{"g1": g1, "g2": g2, "g1stats": g1stats, "g2stats": g2stats, "dV": dV,
                                                    "yV": yV})
-
+# view for selecting second group to compare with
 def CompareView(request, pk, name):
     object_list = Group.objects.exclude(pk=pk).order_by('total_view_count').reverse()
     sort = "Most Viewed"
     company_list = Group.objects.exclude(pk=pk).order_by('company').distinct('company')
-    return render(request, 'stats/compare.html', {"name": name, "opk": pk, "object_list": object_list, "sort": sort, "company_list": company_list})
 
+    '''
+    name: group name
+    opk: primary key for group
+    object_list: elements of Group model excluding 'opk' group
+    sort: setting for sort button
+    company_list: distinct 'company' elements of Group model elements excluding 'opk' group
+    '''
+    return render(request, 'stats/compare.html', {"name": name, "opk": pk, "object_list": object_list, "sort": sort,
+                                                  "company_list": company_list})
+
+# view for displaying artists
 def GroupsView(request):
     object_list = Group.objects.all().order_by('total_view_count').reverse()
     sort = "Most Viewed"
@@ -108,14 +124,23 @@ def GroupsView(request):
 
     search_term = ''
 
+    # searching capabilities by artist name or company name
     if 'search' in request.GET:
         search_term = request.GET['search']
         object_list = Group.objects.filter(name__icontains=search_term)
         ol2 = Group.objects.filter(company__icontains=search_term)
         object_list = object_list.union(ol2).order_by('total_view_count').reverse()
 
-    return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list, "search_term": search_term})
+    '''
+    object_list: elements of Group model
+    sort: setting for sort button
+    company_list: distinct 'company' elements of Group model elements
+    search_term: item searched for by user
+    '''
+    return render(request, 'stats/groups.html', {"object_list": object_list, "sort": sort, "company_list": company_list,
+                                                 "search_term": search_term})
 
+# view for selecting second group to compare with sorted by hottest
 def CompareViewHottest(request, pk, name):
     start_date = timezone.now()-timezone.timedelta(days=90)
     end_date = timezone.now()
@@ -124,7 +149,8 @@ def CompareViewHottest(request, pk, name):
     for i,g in enumerate(group):
         hot.append([g, 0])
         if Video.objects.filter(group=g, upload_date__range=(start_date, end_date)).order_by('upload_date').reverse():
-            for v in Video.objects.filter(group=g, upload_date__range=(start_date, end_date)).order_by('upload_date').reverse():
+            for v in Video.objects.filter(group=g, upload_date__range=(start_date, end_date)).order_by('upload_date')\
+                    .reverse():
                 hot[i][1] += v.view_count
     hot.sort(key=operator.itemgetter(1), reverse=True)
     object_list = []
@@ -132,8 +158,18 @@ def CompareViewHottest(request, pk, name):
         object_list.append(h[0])
     sort = "Hottest"
     company_list = Group.objects.exclude(pk=pk).order_by('company').distinct('company')
-    return render(request, 'stats/compare.html',{"name": name, "opk": pk, "object_list": object_list, "sort": sort, "company_list": company_list})
 
+    '''
+    name: group name
+    opk: primary key for group
+    object_list: elements of Group model sorted by 'hottest'
+    sort: setting for sort button
+    company_list: distinct 'company' elements of Group model elements
+    '''
+    return render(request, 'stats/compare.html', {"name": name, "opk": pk, "object_list": object_list, "sort": sort,
+                                                  "company_list": company_list})
+
+# view for displaying artists sorted by hottest
 def GroupsViewHottest(request):
     start_date = timezone.now()-timezone.timedelta(days=90)
     end_date = timezone.now()
@@ -142,7 +178,8 @@ def GroupsViewHottest(request):
     for i,g in enumerate(group):
         hot.append([g, 0])
         if Video.objects.filter(group=g, upload_date__range=(start_date, end_date)).order_by('upload_date').reverse():
-            for v in Video.objects.filter(group=g, upload_date__range=(start_date, end_date)).order_by('upload_date').reverse():
+            for v in Video.objects.filter(group=g, upload_date__range=(start_date, end_date)).order_by('upload_date')\
+                    .reverse():
                 hot[i][1] += v.view_count
     hot.sort(key=operator.itemgetter(1), reverse=True)
     object_list = []
@@ -150,46 +187,106 @@ def GroupsViewHottest(request):
         object_list.append(h[0])
     sort = "Hottest"
     company_list = Group.objects.order_by('company').distinct('company')
-    return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
+    '''
+    object_list: elements of Group model
+    sort: setting for sort button
+    company_list: distinct 'company' elements of Group model elements
+    '''
+    return render(request, 'stats/groups.html', {"object_list": object_list, "sort": sort,
+                                                 "company_list": company_list})
+
+# view for selecting second group to compare with sorted by alphabetical
 def CompareViewAlpha(request, pk, name):
     object_list = Group.objects.exclude(pk=pk).order_by('name')
     sort = "Alphabetical"
     company_list = Group.objects.exclude(pk=pk).order_by('company').distinct('company')
-    return render(request, 'stats/compare.html',{"name": name, "opk": pk, "object_list": object_list, "sort": sort, "company_list": company_list})
 
+    '''
+    name: group name
+    opk: primary key for group
+    object_list: elements of Group model sorted by 'hottest'
+    sort: setting for sort button
+    company_list: distinct 'company' elements of Group model elements
+    '''
+    return render(request, 'stats/compare.html', {"name": name, "opk": pk, "object_list": object_list, "sort": sort,
+                                                  "company_list": company_list})
+
+# view for displaying artists sorted by alphabetical
 def GroupsViewAlpha(request):
     object_list = Group.objects.all().order_by('name')
     sort = "Alphabetical"
     company_list = Group.objects.order_by('company').distinct('company')
-    return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
+    '''
+    object_list: elements of Group model
+    sort: setting for sort button
+    company_list: distinct 'company' elements of Group model elements
+    '''
+    return render(request, 'stats/groups.html', {"object_list": object_list, "sort": sort,
+                                                 "company_list": company_list})
+
+# view for selecting second group to compare with sorted by oldest
 def CompareViewOldest(request, pk, name):
     object_list = Group.objects.exclude(pk=pk).order_by('debut_date')
     sort = "Oldest"
     company_list = Group.objects.exclude(pk=pk).order_by('company').distinct('company')
+
+    '''
+    name: group name
+    opk: primary key for group
+    object_list: elements of Group model sorted by 'hottest'
+    sort: setting for sort button
+    company_list: distinct 'company' elements of Group model elements
+    '''
     return render(request, 'stats/compare.html', {"name": name, "opk": pk, "object_list": object_list, "sort": sort,
                                                   "company_list": company_list})
 
+# view for displaying artists sorted by oldest
 def GroupsViewOldest(request):
     object_list = Group.objects.all().order_by('debut_date')
     sort = "Oldest"
     company_list = Group.objects.order_by('company').distinct('company')
-    return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
+    '''
+    object_list: elements of Group model
+    sort: setting for sort button
+    company_list: distinct 'company' elements of Group model elements
+    '''
+    return render(request, 'stats/groups.html', {"object_list": object_list, "sort": sort,
+                                                 "company_list": company_list})
+
+# view for selecting second group to compare with sorted by newest
 def CompareViewNewest(request, pk, name):
     object_list = Group.objects.exclude(pk=pk).order_by('debut_date').reverse()
     sort = "Newest"
     company_list = Group.objects.exclude(pk=pk).order_by('company').distinct('company')
+
+    '''
+    name: group name
+    opk: primary key for group
+    object_list: elements of Group model sorted by 'hottest'
+    sort: setting for sort button
+    company_list: distinct 'company' elements of Group model elements
+    '''
     return render(request, 'stats/compare.html', {"name": name, "opk": pk, "object_list": object_list, "sort": sort,
                                                   "company_list": company_list})
 
+# view for displaying artists sorted by newest
 def GroupsViewNewest(request):
     object_list = Group.objects.all().order_by('debut_date').reverse()
     sort = "Newest"
     company_list = Group.objects.order_by('company').distinct('company')
-    return render(request, 'stats/groups.html',{"object_list": object_list, "sort": sort, "company_list": company_list})
 
+    '''
+    object_list: elements of Group model
+    sort: setting for sort button
+    company_list: distinct 'company' elements of Group model elements
+    '''
+    return render(request, 'stats/groups.html', {"object_list": object_list, "sort": sort,
+                                                 "company_list": company_list})
+
+# view for artist profiles
 def ProfileView(request, pk, name):
     group = Group.objects.get(pk=pk)
     vid_list = Video.objects.filter(group=pk).order_by('upload_date').reverse()
@@ -200,20 +297,28 @@ def ProfileView(request, pk, name):
           ['Dec',0]]
     for v in dateVids:
         dV[v['month']-1][1] = v['c']
-    return render(request, 'stats/profile.html', {'group':group, 'vid_list':vid_list, 'maxVid':maxVid,
-                                                  'dV':dV})
 
+    '''
+    group: artist's element from Group model
+    vid_list: video objects from Video model tied to 'group'
+    maxVid: video by artist with highest view count
+    dV: data for artist videos by month
+    '''
+    return render(request, 'stats/profile.html', {'group': group, 'vid_list': vid_list, 'maxVid': maxVid, 'dV': dV})
+
+# view for categories, not currently accessible
 class CategoriesView(generic.ListView):
     template_name = 'stats/categories.html'
     model = Group
 
+# view for deleting all videos in database
 #def deleteVids(request):
 #    Video.objects.all().delete()
 #    context={}
 #    return render(request,'stats/groupedit.html',context)
 
+# view for displaying visualizations of data
 def DataView(request):
-
     group = Group.objects.all()
     gender = group.values('gender').annotate(Views=Sum('total_view_count')).values('gender', 'Views')
     for i,g in enumerate(gender):
@@ -225,21 +330,31 @@ def DataView(request):
             gender[i]['gender'] = 'Mixed'
     genderCount = group.values('gender').annotate(c=Count('gender')).values('gender', 'c')
 
-    groupYear = group.annotate(year=ExtractYear('debut_date')).values('year').annotate(c=Count('id')).values('year','c')
+    groupYear = group.annotate(year=ExtractYear('debut_date')).values('year').annotate(c=Count('id'))\
+        .values('year', 'c')
 
     videos = Video.objects.all()
 
     company = group.values('company').annotate(Views=Sum('total_view_count'), Vids=Sum('video_count'),
                                                c=Count('company')).values('company', 'Views', 'Vids', 'c')
 
+    '''
+    group: all elements of Group model
+    company: all company names
+    gender: data grouped by gender
+    genderCount: data counting by gender
+    videos: all elements of Video model
+    groupYear: data on artists by year
+    '''
     return render(request, 'stats/data.html', {"group": group, "company": company, "gender": gender,
                                                "genderCount": genderCount, "videos": videos, "groupYear": groupYear})
 
+# view for displaying data on artists grouped by gender
 def GenderDataView(request):
-
-    gender = Group.objects.all().values('gender')\
-        .annotate(g=Count('id'), v=Sum('video_count'), i=Sum('current_member_count'),
-                  views=Sum('total_view_count')).values('gender', 'g', 'v', 'i', 'views')
+    gender = Group.objects.all().values('gender').annotate(g=Count('id'),
+                                                           v=Sum('video_count'), i=Sum('current_member_count'),
+                                                           views=Sum('total_view_count')).values('gender', 'g', 'v',
+                                                                                                 'i', 'views')
     for i, g in enumerate(gender):
         if g['gender'] == 'B':
             gender[i]['gender'] = 'Boys'
@@ -249,12 +364,13 @@ def GenderDataView(request):
             gender[i]['gender'] = 'Mixed'
 
     genderYear = Group.objects.all().values('gender').annotate(year=ExtractYear('debut_date'), gcount=Count('gender'))\
-        .values('gender','year','gcount')
+        .values('gender', 'year', 'gcount')
 
     genderY = []
 
     minYear = Group.objects.all().annotate(year=ExtractYear('debut_date')).values('year').order_by('year')[0]['year']
-    maxYear = Group.objects.all().annotate(year=ExtractYear('debut_date')).values('year').order_by('year').reverse()[0]['year']
+    maxYear = Group.objects.all().annotate(year=ExtractYear('debut_date')).values('year').order_by('year')\
+        .reverse()[0]['year']
 
     for i in range(minYear, maxYear+1):
         genderY.append([i, 0, 0, 0])
@@ -273,19 +389,30 @@ def GenderDataView(request):
                 if e[0] >= j['year']:
                     e[3] += j['gcount']
 
+    '''
+    gender: Group model data by gender
+    genderYear: gender data by year
+    minYear: earliest year by gender
+    maxYear: most recent year by gender
+    genderY: more data by year
+    '''
+    return render(request, 'stats/genderData.html', {"gender": gender, "genderYear": genderYear, "minYear": minYear,
+                                                     "maxYear": maxYear, "genderY": genderY})
 
-
-    return render(request, 'stats/genderData.html', {"gender": gender, "genderYear": genderYear, "minYear": minYear, "maxYear": maxYear, "genderY": genderY})
-
+# view for displaying data on artists grouped by company
 def CompanyDataView(request):
-
     group = Group.objects.all()
     company = group.values('company').annotate(Views=Sum('total_view_count'), Vids=Sum('video_count'),
                                                c=Count('company')).values('company', 'Views', 'Vids', 'c')
+
+    '''
+    group: all elements of Group model
+    company: list of companies
+    '''
     return render(request, 'stats/companyData.html', {"group": group, "company": company})
 
+# view for displaying a graph of all data
 def GraphView(request, gender):
-
     if gender == 'all':
         group = Group.objects.all().order_by('total_view_count').reverse()
     else:
@@ -318,13 +445,23 @@ def GraphView(request, gender):
             top.append(temptop)
             recent.append(temprecent)
 
-    return render(request, 'stats/graph.html', {'group':group, 'videos':videos, 'last':last, 'top':top, 'recent':recent,
-                  'gender':gender})
+    '''
+    group: all elements of Group model
+    videos: video data
+    last: data using only latest music video
+    top: data using only best 3 music videos
+    recent: data using only latest 3 music videos
+    gender: data by gender
+    '''
+    return render(request, 'stats/graph.html', {'group': group, 'videos': videos, 'last': last, 'top': top,
+                                                'recent': recent, 'gender': gender})
 
+# admin view for adding videos to database
 class AddVideos(AdminStaffRequiredMixin, generic.ListView):
     template_name = 'stats/addvideos.html'
     model = Group
 
+# admin view for editing Group model elements
 #@staff_member_required
 def GroupEdit(request, pk, name):
     group = Group.objects.get(pk=pk)

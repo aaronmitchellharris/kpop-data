@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from stats.models import Group, Video
 
+# automatic update of music video view information using Youtube api
 class Command(BaseCommand):
     help = 'Updates views'
 
